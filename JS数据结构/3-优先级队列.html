@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script type='text/javascript'>
+    function PriorityQueue () {
+      function QueueElement (element, priority) {
+        this.element = element
+        this.priority = priority
+      }
+      // 封装属性
+      this.items = []
+      // 插入方法
+      PriorityQueue.prototype.enqueue = function (element, priority) {
+        let queueelement = new QueueElement(element, priority)
+        if (this.items.length === 0) {
+          this.items.push(queueelement)
+        } else {
+          let add = false
+          for (let i=0; i<this.items.length; i++) {
+            if (queueelement.priority < this.items[i].priority) {
+              this.items.splice(i, 0, queueelement)
+              add = true
+              break
+            }
+          }
+          if (!add) {
+            this.items.push(queueelement)
+          }
+        }
+      }
+      // 移除队列的第一项，返回被移除的元素
+      PriorityQueue.prototype.dequeue = function () {
+        return this.items.shift()
+      }
+      // 返回队列中的第一个元素，不改变队列结构
+      PriorityQueue.prototype.front = function () {
+        return this.items[0]
+      }
+      //isEmpty方法
+      PriorityQueue.prototype.isEmpty = function () {
+        return this.items.length === 0
+      }
+      // size方法
+      PriorityQueue.prototype.size = function () {
+        return this.items.length
+      }
+      // toString方法
+      PriorityQueue.prototype.toString = function () {
+        let resultString = ''
+        for (let i=0; i<this.items.length; i++) {
+          resultString += this.items[i].element + '-' + this.items[i].priority + ' '
+        }
+        return resultString
+      }
+    }
+    // 测试代码
+    let qq = new PriorityQueue()
+    qq.enqueue('aaa', 1)
+    qq.enqueue('bbb', 2)
+    qq.enqueue('ccc', 3)
+    alert(qq)
+  </script>
+</body>
+</html>
