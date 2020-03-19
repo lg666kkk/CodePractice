@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script type='text/javascript'>
+    // 封装栈类
+    function Stack () {
+      // 栈中的属性
+      this.items = []
+      // 栈的相关操作
+      // push方法 -- 添加一个元素到栈顶位置
+      Stack.prototype.push = function (element) {
+        this.items.push(element)
+      }
+      // pop方法 -- 移除栈顶元素，同时返回被移除元素
+      Stack.prototype.pop = function () {
+        return this.items.pop()
+      }
+      // peek方法：返回栈顶元素，不对栈做任何修改
+      Stack.prototype.peek = function () {
+        return this.items[this.items.length - 1]
+      }
+      // isEmpty方法
+      Stack.prototype.isEmpty = function () {
+        return this.items.length === 0
+      }
+      // size():返回栈的元素个数
+      Stack.prototype.size = function () {
+        return this.items.length
+      }
+      // toString方法，将栈结构的内容以字符形式返回
+      Stack.prototype.toString = function () {
+        let resultString = ''
+        for (let i=0; i<this.items.length; i++) {
+          resultString += this.items[i] + ' '
+        }
+        return resultString
+      }
+    }
+    //栈的使用
+    let s = new Stack()
+    // s.push(1)
+    // s.push(2)
+    // s.push(3)
+    // alert(s)
+    // alert(s.pop())
+    // alert(s.peek())
+    // console.log(s.toString());
+    // 十进制转二进制
+    function dec2Bin (decNumber) {
+      let stack = new Stack()
+      while (decNumber > 0) {
+        // 获取余数放入栈中
+        stack.push(decNumber % 2)
+        decNumber = Math.floor(decNumber / 2)
+      }
+      let binString = ''
+      while (!stack.isEmpty()) {
+        binString += stack.pop()
+      }
+      return binString
+    }
+    console.log(dec2Bin(100));
+    console.log(dec2Bin(10));
+  </script>
+</body>
+</html>
