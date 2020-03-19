@@ -10,32 +10,71 @@
     function Queue () {
       this.items = []
       // 向队列尾部添加一个或多个元素
-      Queue.prototype.enqueue = function () {
-
+      Queue.prototype.enqueue = function (element) {
+        this.items.push(element)
       }
       // 移除队列的第一项，返回被移除的元素
       Queue.prototype.dequeue = function () {
-
+        return this.items.shift()
       }
       // 返回队列中的第一个元素，不改变队列结构
       Queue.prototype.front = function () {
-
+        return this.items[0]
       }
       //isEmpty方法
       Queue.prototype.isEmpty = function () {
-
+        return this.items.length === 0
       }
       // size方法
       Queue.prototype.size = function () {
-
+        return this.items.length
       }
       // toString方法
       Queue.prototype.toString = function () {
-        
+        let resultString = ''
+        for (let i=0; i<this.items.length; i++) {
+          resultString += this.items[i] + ' '
+        }
+        return resultString
       }
-
     }
     // 使用队列
+    let q = new Queue()
+    q.enqueue(1)
+    q.enqueue(2)
+    q.enqueue(3)
+    //alert(q)
+    //alert(q.size())
+    //alert(q.isEmpty())
+    //alert(q.dequeue())
+    //alert(q.size())
+    //alert(q.front())
+    ///alert(q.toString())
+    /// 击鼓传花
+    function passGame (nameList, num) {
+      let queue = new Queue()
+      let index = 0
+      // 将所有元素加入队列
+      for (let i=0; i<nameList.length; i++) {
+        queue.enqueue(nameList[i])
+      }
+      while (queue.size() > 1) {
+        /**
+         * 开始数数字
+         * 不是num的时候，重新加入到队列的末尾
+         * 是number的时候，将其从队列删除
+        */
+        for (let i=0; i<num-1; i++) {
+          queue.enqueue(queue.dequeue())
+        }
+        // 是num的时候直接删除
+        queue.dequeue()
+      }
+      let end = queue.front()
+      return nameList.indexOf(end)
+    }
+    nameList = ['Lili', 'Lucy', 'Tom', 'Lilei', 'why']
+    alert(passGame(nameList, 3))
   </script>
 </body>
 </html>
