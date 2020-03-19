@@ -2,6 +2,8 @@ const http = require('http')
 const server = http.createServer()
 server.on('request', function (request, response) {
   console.log('收到请求了，路径是：' + request.url);
+  console.log('请求我的客户端端口号：' + request.socket.remotePort);
+  console.log('请求我的IP地址为：' + request.socket.remoteAddress);
   // response对象有一个方法：write可以用来给客户端发送响应数据
   // write可以使用多次。但最后一定要要使用end()结束
   response.write('hello')
