@@ -7,14 +7,25 @@
 </head>
 <body>
   <script type='text/javascript'>
-    var tmp = new Date()
+    // var tmp = new Date()
+    // function f () {
+    //   console.log(tmp);
+    //   if (false) {
+    //     var tmp = 'dddd'
+    //   }
+    // }
+    // f()
     function f () {
-      console.log(tmp);
-      if (false) {
-        var tmp = 'dddd'
-      }
+      console.log('ddd');
     }
-    f()
+    (function () {
+      if (false) {
+        let f = function () {
+          console.log('ssss');
+        }
+      }
+      f()
+    }());
   </script>
 </body>
 </html>
