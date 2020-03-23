@@ -45,6 +45,26 @@ Url {
   href:
    'https://user:pass@sub.host.com:8080/p/a/t/h?query=string#hash' // 原字符串本身
 }
+/**
+ * 加true与不加true区别
+ *   query解析出来的类型不同，加true时为object
+*/
+url.parse('https://user:pass@sub.host.com:8080/p/a/t/h?query=string#hash', true)
+// 得到的结果如下
+Url {
+  protocol: 'https:',
+  slashes: true,     
+  auth: 'user:pass', 
+  host: 'sub.host.com:8080',
+  port: '8080',
+  hostname: 'sub.host.com',
+  hash: '#hash',
+  search: '?query=string',
+  query: [Object: null prototype] { query: 'string' },
+  pathname: '/p/a/t/h',
+  path: '/p/a/t/h?query=string',
+  href:
+   'https://user:pass@sub.host.com:8080/p/a/t/h?query=string#hash' }
 ```
 2. url.host()
 3. url.hash()
