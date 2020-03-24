@@ -1,6 +1,72 @@
 ## ES6笔记
 ### 一、let命令
-
+1. 不存在变量提升，具有暂时性死区，具有块级作用域
+```javascript
+function f1() {
+  let n = 5;
+  if (true) {
+    let n = 10;
+  }
+  console.log(n); // 5
+}
+// 使用var定义的话最后输出10
+```
+2. ES6 允许块级作用域的任意嵌套。内层作用域可以定义外层作用域的同名变量
+#### 块级作用域与函数声明
+1. ES5 规定，函数只能在顶层作用域和函数作用域之中声明，不能在块级作用域声明。但是，浏览器没有遵守这个规定，为了兼容以前的旧代码，还是支持在块级作用域之中声明函数，因此上面两种情况实际都能运行，不会报错
+2. ES6 引入了块级作用域，明确允许在块级作用域之中声明函数。ES6 规定，块级作用域之中，函数声明语句的行为类似于let，在块级作用域之外不可引用
+3. ES6 的块级作用域必须有大括号，如果没有大括号，JavaScript 引擎就认为不存在块级作用域。
+```javascript
+// ES5环境运行得到结果 I am inside
+function f() { console.log('I am outside!'); }
+(function () {
+  if (false) {
+    // 重复声明一次函数f
+    function f() { console.log('I am inside!'); }
+  }
+  f();
+}());
+/**
+ * // 以上代码相当于下面代码(if内声明的函数f会被提升到函数头部)
+function f() { console.log('I am outside!'); }
+(function () {
+  function f() { console.log('I am inside!'); }
+  if (false) {
+  }
+  f();
+}());
+*/
+```
+```javascript
+// 浏览器的 ES6 环境,本应该输出I am outside!，但是会报错
+function f() { console.log('I am outside!'); }
+(function () {
+  if (false) {
+    // 重复声明一次函数f
+    function f() { console.log('I am inside!'); }
+  }
+  f();
+}());
+// Uncaught TypeError: f is not a function
+/**
+ * // 上面代码相当于下面代码
+function f() { console.log('I am outside!'); }
+(function () {
+  var f = undefined;
+  if (false) {
+    function f() { console.log('I am inside!'); }
+  }
+  f();
+}());
+// Uncaught TypeError: f is not a function
+*/
+/**
+ * 原因：原来，如果改变了块级作用域内声明的函数的处理规则，显然会对老代码产生很大影响。为了减轻因此产生的不兼容问题，ES6 在附录 B里面规定，浏览器的实现可以不遵守上面的规定，有自己的行为方式。
+ *  1. 允许在块级作用域内声明函数。
+    2.函数声明类似于var，即会提升到全局作用域或函数作用域的头部。
+    3. 函数声明还会提升到所在的块级作用域的头部。
+*/
+```
 ### 二、const命令
 1. const声明一个只读的常量。一旦声明，常量的值就不能改变
 2. const命令声明的常量也是不提升，同样存在暂时性死区，只能在声明的位置后面使用。
