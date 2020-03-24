@@ -57,7 +57,8 @@ exports.save = function (student) {
         reject(err)
       }
       let stu = JSON.parse(data).student
-      student.id = stu[stu.length - 1].id + 1
+      // 防止全部删除时出错
+      student.id = stu.length === 0 ? 1 : stu[stu.length - 1].id + 1
       stu.push(student)
       let file = JSON.stringify({
             student:stu
@@ -80,11 +81,13 @@ exports.update = function (student, callback) {
         callback(err)
     }
     let students = JSON.parse(data).student
+    // 记得将ID转化为number
+    student.id = parseInt(student.id)
     /**
      * 当某个遍历项符合item.id === student.id条件时，find会终止遍历，同时返回遍历项
      */
     let stu = students.find (function (item) {
-      return item.id === parseInt(student.id)
+      return item.id === student.id
     })
     // 遍历拷贝对象
     for (let key in student) {
@@ -107,6 +110,7 @@ exports.finbyId = function (id, callback) {
         callback(err)
     }
     let students = JSON.parse(data).student
+    
     let ret = students.find(function (item) {
       return item.id === parseInt(id)
     })
@@ -116,6 +120,26 @@ exports.finbyId = function (id, callback) {
 /**
  * 删除学生
  */
-exports.del = function () {
-
+exports.del = function (id, callback) {
+    fs.readFile(dbPath, 'utf8', function (err, data) {
+      if (err) {
+        return callback(err)
+      }
+      let stu = JSON.parse(data).student
+      // findIndex用于根据元素查找下标
+      let deleteID = stu.findIndex(function (item) {
+        return item.id === parseInt(id)
+      })
+      // 根据下标删除学生对象
+      stu.splice(deleteID, 1)
+      let file = JSON.stringify({
+        student:stu
+      })
+      fs.writeFile(dbPath, file, function (err) {
+        if (err) {
+          return callback(err)
+        }
+        callback(null)
+      })
+    })
 }

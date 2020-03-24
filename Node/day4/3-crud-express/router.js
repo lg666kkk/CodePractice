@@ -106,7 +106,7 @@ router.get('/student/edit', function (req, res) {
   // 在客户端的列表页中处理链接问题
   // 获取要编辑的学生id
   // 渲染编辑页面 -- 根据id查找学生信息,使用模板引擎渲染页面
-  console.log(req.query.id);
+  //console.log(req.query.id);
   Student.finbyId(parseInt(req.query.id), function (err, student) {
     if (err) {
       return res.status(500).send('Server error')
@@ -129,7 +129,16 @@ router.post('/student/edit', urlencodedParser, function (req, res) {
   })
 })
 router.get('/student/delete', function (req, res) {
-  
+  // 获取要删除的id
+  // 根据id执行删除操作
+  // 根据结果发送响应数据
+  //console.log(req.query.id);
+  Student.del(req.query.id, function (err) {
+    if (err) {
+      return res.status(500).send('Server error')
+    }
+    res.redirect('/student')
+  })
 })
 // 导出router
 module.exports = router
