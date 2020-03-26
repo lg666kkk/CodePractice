@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    settimeout
+    readFile
+    writeFile
+    readdir
+    ajax
+    往往异步API都伴随有一个回调函数
+  -->
+  <script type='text/javascript'>
+    function get (url, callback) {
+      var oReq = new XMLHttpRequest()
+      // 当请求加载成功之后要调用指定的函数
+      oReq.onload = function () {
+        callback(oReq.responseText);
+      }
+      oReq.open('get', url, true)
+      oReq.send()
+    }
+    get('data.json', function (data) {
+      console.log(data);
+    })
+  </script>
+</body>
+</html>
