@@ -1,1 +1,5 @@
-{"student":[{"name":"1111","gender":"1","age":"1111","hobbies":"1111","id":1}]}
+{
+  "student": [
+    { "name": "1111", "gender": "1", "age": "1111", "hobbies": "1111", "id": 1 }
+  ]
+}
