@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script type='text/javascript'>
+    // let [x, y, ...z] = ['a'];
+    // console.log("x --" + x + ", y --" + y + ", z --" + z);
+    // console.log(typeof x + "---" + typeof y + "---" + typeof z);
+    // let [x, y, z] = new Set(['a', 'b', 'c']);
+    // console.log("x --" + x + ", y --" + y + ", z --" + z);
+    // function f() {
+    //   // console.log('aaa');
+    //   return 'aaa'
+    // }
+    // let [x = f()] = [];
+    // console.log("x的值为" + x);
+    // let { log, sin, cos } = Math;
+    // let { foo: baz } = { foo: 'aaa', bar: 'bbb' };
+    // console.log(foo);
+    // console.log(baz);
+    // let obj = {
+    //     p: [
+    //       'Hello',
+    //       { y: 'World' }
+    //     ]
+    //   };
+    //   let { p: [x, { y }] } = obj;
+    //   console.log(x);
+    //   console.log(y);
+    //   console.log(p);
+    // const node = {
+    //     loc: {
+    //       start: {
+    //         line: 1,
+    //         column: 5
+    //       }
+    //     }
+    //   };
+
+    //   let { loc, loc: { start }, loc: { start: { line } } } = node;
+    let obj = {};
+    let arr = [];
+
+    ({ foo: obj.prop, bar: arr[0] } = { foo: 123, bar: true });
+
+  </script>
+</body>
+</html>
