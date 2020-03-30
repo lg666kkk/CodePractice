@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
-  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="/public/css/bootstrap.css">
   <link rel="stylesheet" href="/public/css/login.css">
 </head>
 
@@ -42,6 +42,7 @@
     $('#login_form').on('submit', function (e) {
       e.preventDefault()
       var formData = $(this).serialize()
+      console.log(formData);
       console.log(formData)
       $.ajax({
         url: '/login',

@@ -17,8 +17,35 @@ router.get('/login', function (req, res) {
   res.render('login.html')
 })
 router.post('/login', urlencodedParser, function (req, res) {
-  // console.log(req.body);
+    // 获取表单数据
+    // 查询数据库用户名以及密码是否正确
+    // 发送响应数据
+    try {
+      User.findOne({
+        email: req.body.email,
+        password: md5(md5(req.body.password) + "lgtxwd")
+      }).then((user) => {
+        if (!user) {
+          return res.status(200).json({
+            err_code: 1,
+            message: "邮箱或者password无效"
+          })
+        } else {
+          // 用户存在，登陆成功，记录登录状态
+          req.session.user = user
+          res.status(200).json({
+            err_code: 0,
+            message: "ok!"
+          })
+        }
+      })
 
+    } catch (err) {
+      return res.status(500).json({
+        err_code: 500,
+        message: err.message
+      }) 
+    }
 })
 router.get('/register', function (req, res) {
   res.render('register.html')
@@ -60,6 +87,12 @@ router.post('/register', urlencodedParser,async function (req, res) {
     }) 
   }
 
+})
+router.get('/logout', function (req, res) {
+  // 清除登录状态
+  // 重定向到登录页
+  delete req.session.user
+  res.redirect('/login')
 })
 
 module.exports = router

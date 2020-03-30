@@ -14,6 +14,12 @@ app.use(session({
   saveUninitialized: true //无论你是否使用sesion，我都默认直接给你分配一把钥匙
 }))
 app.use(router)
+// 配置一个404的中间件
+app.use(function (req, res, next) {
+  res.render('404.html')
+})
+// 配置一个全局错误处理中间件
+
 app.listen(3000, function () {
       console.log('Server is running ...');
 })
