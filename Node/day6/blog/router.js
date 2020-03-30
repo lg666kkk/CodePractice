@@ -16,7 +16,7 @@ router.get('/', function (req, res) {
 router.get('/login', function (req, res) {
   res.render('login.html')
 })
-router.post('/login', urlencodedParser, function (req, res) {
+router.post('/login', urlencodedParser, function (req, res,next) {
     // 获取表单数据
     // 查询数据库用户名以及密码是否正确
     // 发送响应数据
@@ -41,16 +41,17 @@ router.post('/login', urlencodedParser, function (req, res) {
       })
 
     } catch (err) {
-      return res.status(500).json({
-        err_code: 500,
-        message: err.message
-      }) 
+      // return res.status(500).json({
+      //   err_code: 500,
+      //   message: err.message
+      // }) 
+      return next(err)
     }
 })
 router.get('/register', function (req, res) {
   res.render('register.html')
 })
-router.post('/register', urlencodedParser,async function (req, res) {
+router.post('/register', urlencodedParser,async function (req, res,next) {
   //console.log(req.body);
   // 操作数据库 -- 判断用户是否存在
   try {
@@ -81,10 +82,11 @@ router.post('/register', urlencodedParser,async function (req, res) {
     })
 
   } catch (err) {
-    return res.status(500).json({
-      err_code: 500,
-      message: '服务端错误'
-    }) 
+    // return res.status(500).json({
+    //   err_code: 500,
+    //   message: '服务端错误'
+    // }) 
+    return next(err)
   }
 
 })

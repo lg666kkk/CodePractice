@@ -19,7 +19,12 @@ app.use(function (req, res, next) {
   res.render('404.html')
 })
 // 配置一个全局错误处理中间件
-
+app.use(function (err, req, res, next) {
+  res.status(500).json({
+    err_code: 500,
+    message: err.message
+  })
+})
 app.listen(3000, function () {
       console.log('Server is running ...');
 })
