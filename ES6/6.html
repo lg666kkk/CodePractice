@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script type='text/javascript'>
+    function selectSort(nums) {
+      for(let i=0, len=nums.length; i<len; i++) {
+        for(let j=i+1; j<len; j++) {
+          if(nums[i] > nums[j]) {
+            [nums[i], nums[j]] = [nums[j], nums[i]];
+          }
+        }
+      }
+    }
+    let arr = [5,2,3,1]
+    selectSort(arr)
+    console.log(arr);
+  </script>
+</body>
+</html>
