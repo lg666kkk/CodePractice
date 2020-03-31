@@ -2,7 +2,7 @@
 /**
  * art-template不仅可以在浏览器使用，也可以在node中使用
  * 1. npm安装
- * 2. 在node中使用 aet-template模板引擎 --- 使用require加载
+ * 2. 在node中使用 art-template模板引擎 --- 使用require加载
  * 3. 在需要使用的文件模块中加载art-template
  */
 const fs = require('fs')

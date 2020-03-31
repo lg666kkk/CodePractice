@@ -2,15 +2,6 @@ const http = require('http')
 const Serve = http.createServer()
 Serve.on('request', function (req, res) {
   let url = req.url
-  // if (url === '/') {
-  //   res.end('node Hello')
-  // } else if (url === '/index') {
-  //   res.end('index')
-  // } else if (url === '/aaa') {
-  //   res.end('saaaa')
-  // } else {
-  //   res.end('Can not found')
-  // }
   if (url === '/product') {
     let products = [
       {
