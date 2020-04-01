@@ -1,4 +1,4 @@
-# tabbar
+# tabbar -- 电商项目底部栏和路由跳转实现
 
 > A Vue.js project
 
