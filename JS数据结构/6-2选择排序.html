@@ -7,14 +7,22 @@
 </head>
 <body>
   <script type='text/javascript'>
-    // function selectionSort(array) {
-      
-    // }
-    //let res = '11111'
-    let str = "4193 with words"
-    let res = str.trim().match(/^(\-|\+)?\d+/g)
-    console.log(res);
-    console.log(Number(res[0]));
+    function selectionSort(array) {
+      for (let j=0; j<array.length-1; j++) {
+        let min = j
+        for (let i=min+1; i<array.length; i++) {
+          if (array[min] > array[i]) {
+            min = i
+          }
+        }
+        let temp = array[min]
+        array[min] = array[j]
+        array[j] = temp
+      }
+    }
+    let arr = [22,1,2,3,44,33,55,6,7,2,11]
+    selectionSort(arr)
+    console.log(arr);
   </script>
 </body>
 </html>

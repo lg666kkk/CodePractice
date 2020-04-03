@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script type='text/javascript'>
+    function insertSort (array) {
+      // 外层循环：从第一个开始位置获取数据，向前面局部有序进行插入
+      for (let i=1; i<array.length; i++) {
+        // 内层循环：获取i位置的元素，和前面的数据一次进行比较
+        let j = i
+        let temp = array[i]
+        while (array[j-1] > temp && j>0) {
+          array[j] = array[j-1]
+          j--
+        }
+        // 将j位置的数据放置于temp
+        array[j] = temp
+      }
+    }
+    let arr = [11,222,2,3,1,20,33,44,22]
+    insertSort(arr)
+    console.log(arr);
+  </script>
+</body>
+</html>
