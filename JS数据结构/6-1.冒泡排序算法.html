@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script type='text/javascript'>
+    // 创建列表类
+    function ArrayList () {
+      // 属性
+      this.array = []
+      // 方法
+      // 将数据插入到数组中的方法
+      ArrayList.prototype.insert = function (item) {
+        this.array.push(item)
+      }
+      // toString方法
+      ArrayList.prototype.toString = function () {
+        return this.array.join('-')
+      }
+    }
+    let arr = [1,2,3,4,2,44,32,66,666,44,12]
+    function bubbleSort (array) {
+      // 第一次len=length-1, 比较到倒数第一个位置
+      // 第二次len=length-2, 比较到倒数第二个位置
+      // ....
+      for (let len=array.length-1; len>=0; len--) {
+        for (let i=0; i<len; i++) {
+          if (array[i] > array[i+1]) {
+              // 交换
+              let temp = array[i+1]
+              array[i+1] = array[i]
+              array[i] = temp
+          }
+        }
+      }
+    }
+    console.log(arr);
+    bubbleSort(arr)
+    console.log(arr);
+  </script>
+</body>
+</html>
