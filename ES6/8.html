@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script type='text/javascript'>
+    function rotate(matrix) {
+      const copy = matrix.map( ary => {
+          return [...ary]
+      })
+      console.log("copy",copy);
+      let n = matrix.length
+      for (let i=0; i<copy.length; ++i) {
+          for (let j=0; j<copy[i].length; ++j) {
+            copy[j][n-i-1] = matrix[i][j]
+          }
+      }
+      //return matrix.forEach(row => row.reverse())
+      console.log(copy);
+    };
+    let matrix = [[1,2,3],[4,5,6],[7,8,9]]
+    console.log(rotate(matrix));
+  </script>
+</body>
+</html>
