@@ -3,28 +3,38 @@
     <nav-bar class="home-nav">
       <div slot="center">购物街</div>
     </nav-bar>
+    <home-swiper :banners="banners"></home-swiper>
+    <recommond-view :recommond="recommond"></recommond-view>
   </div>
 </template>
 
 <script>
   import NavBar from 'components/common/navbar/NavBar';
-  import {getDataMultidata} from 'network/home'
+  import HomeSwiper from './childComponent/homeSwiper';
+  import RecommondView from './childComponent/RecommondView'
+
+  import {getDataMultidata} from 'network/home';
   export default {
       name:'Home',
       components: {
-        NavBar
+        NavBar,
+        HomeSwiper,
+        RecommondView
       },
       data() {
         return {
-          result: null
+          banners: [],
+          recommond: []
         }
       },
       // 组件创建完后马上发送网络请求
       created() {
         // 请求多个数据
-        getDataMultidata().then(data => {
-          //console.log(data);
-          this.result = data
+        getDataMultidata().then(res => {
+          //console.log('res' ,res);
+          this.banners = res.data.banner.list
+          this.recommond = res.data.recommend.list
+          //console.log('banners--',this.banners);
         })
       },
   }

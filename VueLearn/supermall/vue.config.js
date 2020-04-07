@@ -9,5 +9,10 @@ module.exports = {
         'views': '@/views',
       }
     }
-  }
+  },
+  // chainWebpack: config => {
+  //   config.module
+  //     .test(/\.less$/)
+  //     .loader("style-loader!css-loader!less-loader")
+  // }
 }
