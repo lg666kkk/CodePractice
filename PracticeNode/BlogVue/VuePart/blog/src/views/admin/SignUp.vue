@@ -10,6 +10,7 @@
 
 <script>
   import {request} from 'network/request';
+  import qs from 'qs';
 
   export default {
       name:'SignUp',
@@ -37,13 +38,13 @@
               //console.log("res", res.data.username);
               //console.log("username",_this.username);
               if (res.data.username === self.username) {
-                _this.$message.error('该用户已存在')
+                self.$message.error('该用户已存在')
               } else {
-                let params = {
+                let data = {
                   username : self.username,
                   password : self.password
                 }
-                //let data = qs.stringify(obj)
+                //let data = qs.stringify(params)
                 // var params = new URLSearchParams();
                 //console.log(data);
                 // params.append('username', _this.username)
@@ -56,7 +57,7 @@
                 request({
                   method: 'post',
                   url: '/api/admin/signup',
-                  params,
+                  data,
                   //headers:{'Content-Type':'application/x-www-form-urlencoded'}
                 }).then(
                   response => {
@@ -70,7 +71,7 @@
               }
             })
             .catch(err => {
-              self.$message.error('注册失败')
+              self.$message.error('注册失败' + err)
             })
         },
         signin(){
@@ -81,7 +82,18 @@
           if (this.password.length < 6) {
             this.$message.error("密码小于6个字符")
           }
-          request()
+          request({
+            method: 'get',
+            url : `/api/admin/getUser/${this.username}`
+          }).then(res => {
+            console.log(res);
+            
+            if (!res.data || res.data.username !== self.username) {
+              self.$message.error("用户不存在")
+            }else if (res.data.password !== self.password) {
+              self.$message.error('密码错误')
+            }
+          })
         }
       }
   }

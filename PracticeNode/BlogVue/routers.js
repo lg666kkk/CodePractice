@@ -31,7 +31,7 @@ router.post('/api/admin/signup', urlencodedParser, function (req, res, next) {
  * 登录
  */
 router.post('/api/admin/signin', urlencodedParser,function (req, res, next) {
-  //console.log(req.body);
+  console.log(req.body);
   req.body.password = md5(md5(req.body.password))
   res.send()
 })
