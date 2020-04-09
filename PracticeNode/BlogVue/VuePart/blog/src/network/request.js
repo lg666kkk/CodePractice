@@ -8,7 +8,7 @@ export function request(config) {
     timeout: 10000
   })
   if (config.method === 'post') {
-    config.data = qs.stringify(config.data)
+    config.paramas = qs.stringify(config.data)
     config.header = {'Content-Type':'application/x-www-form-urlencoded'}
   }
   instance.interceptors.request.use(config => {

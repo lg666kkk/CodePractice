@@ -39,7 +39,7 @@
               if (res.data.username === self.username) {
                 _this.$message.error('该用户已存在')
               } else {
-                let data = {
+                let params = {
                   username : self.username,
                   password : self.password
                 }
@@ -56,7 +56,7 @@
                 request({
                   method: 'post',
                   url: '/api/admin/signup',
-                  data,
+                  params,
                   //headers:{'Content-Type':'application/x-www-form-urlencoded'}
                 }).then(
                   response => {
