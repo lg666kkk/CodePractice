@@ -9,8 +9,8 @@
 </template>
 
 <script>
-  import {request} from '../../network/request';
-  import qs from 'qs'
+  import {request} from 'network/request';
+
   export default {
       name:'SignUp',
       data() {
@@ -22,9 +22,9 @@
       },
       methods: {
         signup(){
-          let _this = this
+          let self = this
           if (this.username.length < 3) {
-            this.$message.error("用户名小于6个字符");
+            this.$message.error("用户名小于3个字符");
           }
           if (this.password.length < 6) {
             this.$message.error("密码小于6个字符")
@@ -36,14 +36,14 @@
               // 用户名存在
               //console.log("res", res.data.username);
               //console.log("username",_this.username);
-              if (res.data.username === _this.username) {
+              if (res.data.username === self.username) {
                 _this.$message.error('该用户已存在')
               } else {
-                let obj = {
-                  username : _this.username,
-                  password : _this.password
+                let data = {
+                  username : self.username,
+                  password : self.password
                 }
-                let data = qs.stringify(obj)
+                //let data = qs.stringify(obj)
                 // var params = new URLSearchParams();
                 //console.log(data);
                 // params.append('username', _this.username)
@@ -57,11 +57,11 @@
                   method: 'post',
                   url: '/api/admin/signup',
                   data,
-                  headers:{'Content-Type':'application/x-www-form-urlencoded'}
+                  //headers:{'Content-Type':'application/x-www-form-urlencoded'}
                 }).then(
                   response => {
                     console.log(response);
-                    _this.$message({
+                    self.$message({
                       message: '注册成功',
                       type: 'success'
                     })
@@ -70,11 +70,18 @@
               }
             })
             .catch(err => {
-              _this.$message.error('注册失败')
+              self.$message.error('注册失败')
             })
         },
         signin(){
-
+          let self = this
+          if (this.username.length < 3) {
+            this.$message.error('用户名小于3个字符')
+          }
+          if (this.password.length < 6) {
+            this.$message.error("密码小于6个字符")
+          }
+          request()
         }
       }
   }
