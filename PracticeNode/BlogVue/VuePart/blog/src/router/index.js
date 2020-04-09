@@ -6,6 +6,10 @@ const routers = [
   {
     path:'',
     redirect: Signup
+  },
+  {
+    path:"/signup",
+    component: Signup
   }
 ] 
 export default new Router({

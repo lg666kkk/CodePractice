@@ -1,10 +1,12 @@
 const express = require("express")
 const router = require('./routers')
 const session = require('express-session')
+const cors = require('cors')
 // 该模块用于将session存入mongo中
 const MongoStore = require('connect-mongo')(session)
 const app = express()
-
+// 跨域
+app.use(cors())
 
 app.use('/node_modules/', express.static('./node_modules/'))
 app.use('/public/', express.static('./public/'))
@@ -25,6 +27,7 @@ app.use(session({
 // 把路由挂载到app服务中
 app.use(router)
 // 配置全局错误处理插件
+
 app.use(function (err, req, res, next) {
   return res.status(500).send()
 })
