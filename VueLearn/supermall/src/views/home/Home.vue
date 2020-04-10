@@ -7,6 +7,7 @@
     <recommond-view :recommond="recommond"></recommond-view>
     <feature></feature>
     <tab-control :titles="['流行', '新款', '精选']" class="tab-control"></tab-control>
+    <good-list :goods="goods['pop'].list"></good-list>
     <ul>
       <li>111</li>
       <li>111</li>
@@ -34,8 +35,8 @@
 
   import NavBar from 'components/common/navbar/NavBar';
   import TabControl from 'components/content/tabControl/TabControl';
-
-  import {getDataMultidata} from 'network/home';
+  import GoodList from 'components/content/goods/GoodList'
+  import {getDataMultidata, getHomeGoods} from 'network/home';
   export default {
       name:'Home',
       components: {
@@ -44,24 +45,47 @@
         Feature,
 
         NavBar,
-        TabControl
+        TabControl,
+        GoodList
       },
       data() {
         return {
           banners: [],
-          recommond: []
+          recommond: [],
+          goods: {
+            'pop': {page: 0, list: []},
+            'new': {page: 0, list: []},
+            'sell': {page: 0, list: []}
+          }
         }
       },
       // 组件创建完后马上发送网络请求
       created() {
         // 请求多个数据
-        getDataMultidata().then(res => {
-          //console.log('res' ,res);
-          this.banners = res.data.banner.list
-          this.recommond = res.data.recommend.list
-          //console.log('banners--',this.banners);
-        })
-      },
+        this.getDataMultidata()
+        // 请求商品数据
+        this.getHomeGoods('pop')
+        this.getHomeGoods('new')
+        this.getHomeGoods('sell')
+      },   
+      methods: {
+        getDataMultidata(){
+          // 请求多个数据
+          getDataMultidata().then(res => {
+            //console.log('res' ,res);
+            this.banners = res.data.banner.list
+            this.recommond = res.data.recommend.list
+            //console.log('banners--',this.banners);
+          })
+        },
+        getHomeGoods (type) {
+          const page = this.goods[type].page + 1
+          getHomeGoods (type, page).then(res => {
+            this.goods[type].list.push(...res.data.list) 
+            this.goods[type].page += 1
+          })
+        }
+      }   
   }
 </script>
 
@@ -83,5 +107,6 @@
     /**粘性粘贴 */
     position: sticky;
     top: 44px;
+    z-index: 8;
   }
 </style>
