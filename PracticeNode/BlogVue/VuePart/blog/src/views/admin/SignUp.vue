@@ -88,14 +88,6 @@
             password : this.password
           }
           request({
-            method: 'get',
-            url : `/api/admin/getUser/${this.username}`,
-          }).then(res => {
-            // 通过后端返回的数据验证
-            if (res.data.username !== self.username) {
-              self.$message.error("用户名或密码错误")
-            }
-            request({
               method : "post",
               url : '/api/admin/signin',
               data,
@@ -109,9 +101,10 @@
                 // 登录成功后删除前端页面密码
                 delete self.password;
                 self.$router.go(-1)
+              } else {
+                self.$message.error("用户名或密码错误")
               }
-            })
-          }).catch(err => {
+            }).catch(err => {
             self.$message.error("登录失败")
           })
         }

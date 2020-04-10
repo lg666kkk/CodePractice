@@ -40,10 +40,16 @@ router.post('/api/admin/signin', urlencodedParser,function (req, res, next) {
     if (err) {
       next(err)
     }
+    //console.log("eeee",docs);
     if (docs !== null) {
       res.json({
         stateCode : 2,
         msg : "登录成功"
+      })
+    } else {
+      res.json({
+        stateCode : 1,
+        msg : "用户名或密码错误"
       })
     }
   })
