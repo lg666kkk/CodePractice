@@ -31,9 +31,23 @@ router.post('/api/admin/signup', urlencodedParser, function (req, res, next) {
  * 登录
  */
 router.post('/api/admin/signin', urlencodedParser,function (req, res, next) {
-  console.log(req.body);
+  //console.log("2222",req.body.username);
   req.body.password = md5(md5(req.body.password))
-  res.send()
+  Db.User.findOne({
+    username : req.body.username,
+    password : req.body.password
+  } , function (err , docs) {
+    if (err) {
+      next(err)
+    }
+    if (docs !== null) {
+      res.json({
+        stateCode : 2,
+        msg : "登录成功"
+      })
+    }
+  })
+  
 })
 /**
  * 根据用户名查找用户
@@ -44,13 +58,12 @@ router.get('/api/admin/getUser/:username', function (req, res) {
    * 但使用req.params却查不到任何内容？？？？
    *  一眼懵逼，看前端咋做的？？
    */
-  //console.log(req.params.username);
   Db.User.findOne({ username: req.params.username }, function (err, docs) {
     if (err) {
       console.error(err)
       return
     }
-    //console.log(docs);
+    //console.log(docs.password);
     res.send(docs)
   })
 })

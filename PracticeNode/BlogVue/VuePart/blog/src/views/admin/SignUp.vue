@@ -61,7 +61,7 @@
                   //headers:{'Content-Type':'application/x-www-form-urlencoded'}
                 }).then(
                   response => {
-                    console.log(response);
+                    //console.log(response);
                     self.$message({
                       message: '注册成功',
                       type: 'success'
@@ -76,23 +76,43 @@
         },
         signin(){
           let self = this
+          // 前端验证用户名和密码是否合法
           if (this.username.length < 3) {
             this.$message.error('用户名小于3个字符')
           }
           if (this.password.length < 6) {
             this.$message.error("密码小于6个字符")
           }
+          let data = {
+            username : this.username,
+            password : this.password
+          }
           request({
             method: 'get',
-            url : `/api/admin/getUser/${this.username}`
+            url : `/api/admin/getUser/${this.username}`,
           }).then(res => {
-            console.log(res);
-            
-            if (!res.data || res.data.username !== self.username) {
-              self.$message.error("用户不存在")
-            }else if (res.data.password !== self.password) {
-              self.$message.error('密码错误')
+            // 通过后端返回的数据验证
+            if (res.data.username !== self.username) {
+              self.$message.error("用户名或密码错误")
             }
+            request({
+              method : "post",
+              url : '/api/admin/signin',
+              data,
+            }).then(res => {
+              // 后端会返回一个stateCode给前端
+              if (res.data.stateCode === 2) {
+                self.$message({
+                  message : "登陆成功",
+                  type : "success"
+                })
+                // 登录成功后删除前端页面密码
+                delete self.password;
+                self.$router.go(-1)
+              }
+            })
+          }).catch(err => {
+            self.$message.error("登录失败")
           })
         }
       }
