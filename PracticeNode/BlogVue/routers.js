@@ -77,12 +77,13 @@ router.get('/api/admin/getUser/:username', function (req, res) {
  * 获取所有文章
  */
 router.get('/api/articleList', function (req, res, next) {
-  console.log(req.query);
+  //console.log(req.query);
   Db.Article.find(function (err, data) {
     if (err) {
       return next(err)
     }
     // res.json()的作用的就是就请求的返回值的转化成json的格式
+    console.log(data);
     res.json(data)
   })
 })

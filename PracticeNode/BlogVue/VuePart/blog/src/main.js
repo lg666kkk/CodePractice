@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import router from './router'
+import App from './App.vue'
 // 导入ui样式
 import 'element-ui/lib/theme-chalk/index.css';
-// 独立导入ui组件
-import App from './App.vue'
+
 import {
   Button,
   Input,
@@ -11,18 +11,18 @@ import {
 } from 'element-ui';
 // 导入vue-resource,与后端进行数据交互
 //import VueResource from 'vue-resource'
+const components = [Button, Input, Message]
+// 全局注册了所有组件
+components.forEach((item) => {
+  Vue.component(item.name, item)
+})
+
+Vue.prototype.$message = Message;
 
 Vue.config.productionTip = false
-// 初始化引入的vue-resource
-//Vue.use(VueResource)
-
-// 初始化引入的ui组件
-Vue.use(Button)
-Vue.use(Input)
-Vue.prototype.$message = Message;
 
 
 new Vue({
-  render: h => h(App),
-  router
+  router,
+  render: h => h(App)
 }).$mount('#app')
