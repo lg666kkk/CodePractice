@@ -7,11 +7,12 @@ import 'element-ui/lib/theme-chalk/index.css';
 import {
   Button,
   Input,
-  Message
+  Message,
+  Tag
 } from 'element-ui';
 // 导入vue-resource,与后端进行数据交互
 //import VueResource from 'vue-resource'
-const components = [Button, Input, Message]
+const components = [Button, Input, Message, Tag]
 // 全局注册了所有组件
 components.forEach((item) => {
   Vue.component(item.name, item)

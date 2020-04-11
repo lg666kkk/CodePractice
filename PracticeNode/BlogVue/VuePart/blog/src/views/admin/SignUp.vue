@@ -1,9 +1,9 @@
 <template>
   <div id="sign-part">
-      <h1>用户登录/注册页面</h1>
+      <h1>后台管理页面</h1>
       <el-input v-model="username" placeholder="请输入用户名" class="username"></el-input>
       <el-input placeholder="请输入密码" v-model="password" show-password class="password"></el-input>
-      <el-button class="register" type="primary" @click="signup">注册</el-button>
+      <el-button class="register" @click="signup">注册</el-button>
       <el-button class="login" type="primary" @click="signin">登录</el-button>
   </div>
 </template>
@@ -24,13 +24,10 @@
       methods: {
         signup(){
           let self = this
-          if (this.username.length < 3) {
-            this.$message.error("用户名小于3个字符");
-          }
-          if (this.password.length < 6) {
-            this.$message.error("密码小于6个字符")
-          }
-          request({
+          if (this.username.length < 3 || this.password.length < 6) {
+            this.$message.error("用户名小于3个字符或密码小于6个字符");
+          } else {
+            request({
             method: 'get',
             url : `/api/admin/getUser/${this.username}`
           }).then(res => {
@@ -71,23 +68,21 @@
               }
             })
             .catch(err => {
-              self.$message.error('注册失败' + err)
+              self.$message.error('注册失败')
             })
+          }
         },
         signin(){
           let self = this
-          // 前端验证用户名和密码是否合法
-          if (this.username.length < 3) {
-            this.$message.error('用户名小于3个字符')
-          }
-          if (this.password.length < 6) {
-            this.$message.error("密码小于6个字符")
-          }
           let data = {
             username : this.username,
             password : this.password
           }
-          request({
+          // 前端验证用户名和密码是否合法
+          if (this.username.length < 3 || this.password.length < 6) {
+            this.$message.error("用户名小于3个字符或密码小于6个字符");
+          } else {
+            request({
               method : "post",
               url : '/api/admin/signin',
               data,
@@ -105,8 +100,9 @@
                 self.$message.error("用户名或密码错误")
               }
             }).catch(err => {
-            self.$message.error("登录失败")
-          })
+              self.$message.error("登录失败")
+            })
+          }
         }
       }
   }
@@ -119,12 +115,13 @@
     margin: 100px auto;
     > h1 {
       text-align: center;
+      margin-bottom: 10px;
     }
     > .password, .username {
       margin-bottom: 20px;
     }
     > .register {
-      margin-left: 130px;
+      margin: 0 auto;
     }
   }
 </style>

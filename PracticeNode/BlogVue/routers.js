@@ -18,11 +18,9 @@ router.get('/test', function (req, res) {
 router.post('/api/admin/signup', urlencodedParser, function (req, res, next) {
   console.log(req.body);
   req.body.password = md5(md5(req.body.password))
-  //console.log(req.body.username);
   new Db.User(req.body).save(function (err) {
     if (err) {
       return next(err)
-      //console.log(err);
     }
     res.send()
   })
@@ -31,7 +29,6 @@ router.post('/api/admin/signup', urlencodedParser, function (req, res, next) {
  * 登录
  */
 router.post('/api/admin/signin', urlencodedParser,function (req, res, next) {
-  //console.log("2222",req.body.username);
   req.body.password = md5(md5(req.body.password))
   Db.User.findOne({
     username : req.body.username,
@@ -40,7 +37,6 @@ router.post('/api/admin/signin', urlencodedParser,function (req, res, next) {
     if (err) {
       next(err)
     }
-    //console.log("eeee",docs);
     if (docs !== null) {
       res.json({
         stateCode : 2,
@@ -83,7 +79,7 @@ router.get('/api/articleList', function (req, res, next) {
       return next(err)
     }
     // res.json()的作用的就是就请求的返回值的转化成json的格式
-    console.log(data);
+    //console.log(data);
     res.json(data)
   })
 })
@@ -139,4 +135,5 @@ router.post('/api/admin/deleteArticle', urlencodedParser, function (req, res, ne
     res.send()
   })
 })
+
 module.exports = router;

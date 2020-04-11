@@ -1,14 +1,18 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 Vue.use(Router)
+
+//懒加载
 const Signup = () => import('views/admin/SignUp.vue')
-const SideBar = () => import('views/SideBar.vue')
 const Article = () => import('views/article/Article.vue')
+const About = () => import('../views/profile/About.vue')
+
 
 const routers = [
   {
     path:'/',
-    redirect: SideBar
+    component: Article
   },
   {
     path:"/admin/signin",
@@ -16,7 +20,11 @@ const routers = [
   },
   {
     path: '/article',
-    component: SideBar
+    component: Article
+  },
+  {
+    path: '/about',
+    component: About
   }
 ] 
 export default new Router({
