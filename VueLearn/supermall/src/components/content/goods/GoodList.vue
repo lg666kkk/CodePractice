@@ -24,6 +24,8 @@
 
 <style lang="less" scoped>
   .goodlist {
-    //display: flex;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
   }
 </style>

@@ -6,8 +6,10 @@
     <home-swiper :banners="banners"></home-swiper>
     <recommond-view :recommond="recommond"></recommond-view>
     <feature></feature>
-    <tab-control :titles="['流行', '新款', '精选']" class="tab-control"></tab-control>
-    <good-list :goods="goods['pop'].list"></good-list>
+    <tab-control :titles="['流行', '新款', '精选']" class="tab-control" 
+    @tabClick="tabClick"
+    ></tab-control>
+    <good-list :goods="showGoods"></good-list>
     <ul>
       <li>111</li>
       <li>111</li>
@@ -56,7 +58,13 @@
             'pop': {page: 0, list: []},
             'new': {page: 0, list: []},
             'sell': {page: 0, list: []}
-          }
+          },
+          currentType: 'pop'
+        }
+      },
+      computed: {
+        showGoods() {
+          return this.goods[this.currentType].list
         }
       },
       // 组件创建完后马上发送网络请求
@@ -69,6 +77,28 @@
         this.getHomeGoods('sell')
       },   
       methods: {
+        /**
+        * 事件监听相关的方法
+        */
+        tabClick(index) {
+          switch (index) {
+            case 0: {
+              this.currentType = 'pop'
+              break
+            }
+            case 1: {
+              this.currentType = 'new'
+              break
+            }
+            case 2: {
+              this.currentType = 'sell'
+              break
+            }
+          }
+        },
+        /**
+        * 网络请求相关的方法 
+        */
         getDataMultidata(){
           // 请求多个数据
           getDataMultidata().then(res => {
@@ -81,6 +111,7 @@
         getHomeGoods (type) {
           const page = this.goods[type].page + 1
           getHomeGoods (type, page).then(res => {
+            //console.log("wwww",res);
             this.goods[type].list.push(...res.data.list) 
             this.goods[type].page += 1
           })
