@@ -29,7 +29,7 @@
         @blur="handleInputConfirm">
       </el-input>
       <span v-else>
-        <el-tooltip class="item" effect="dark" content="重复标签将导致博客发表失败" placement="top">
+        <el-tooltip class="item" effect="dark" content="标签重复将导致博客发表失败" placement="top">
           <el-button class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
         </el-tooltip>
       </span>
@@ -44,17 +44,24 @@
       placeholder="请输入博文简介"
       v-model="gist">
     </el-input>
+    
     <div class="edit_content">
       <h3>内容 (Markdown编辑器)</h3>
     </div>
     <div class="markdown">
-      <textarea class="markdown_input" v-model="content" @input="update"></textarea>
       <div class="markdown_menu">
-        <el-tooltip class="item" effect="dark" content="预览模式" placement="top">
-          <span class="el-icon-view"></span>
-        </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="预览模式" placement="top-end">
+            <span class="el-icon-view" @click="previewClick"></span>
+          </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="编辑模式" placement="left">
+            <span class="el-icon-edit" @click="editClick"></span>
+          </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="分栏模式" placement="bottom-end">
+            <span class="el-icon-reading" @click="subfieldClick"></span>
+          </el-tooltip>
       </div>
-      <div class="markdown_compiled" v-html="compiledMarkdown()"></div>
+      <textarea class="markdown_input" v-model="content" @input="update" :class="{editHidden: editHidden, editShow: editShow,subfieldEdit: subfieldEdit}"></textarea>
+      <div class="markdown_compiled" :class="{fullScreeView:fullScreeView, subfieldView: subfieldView}" v-html="compiledMarkdown()"></div>
       <div class="clear"></div>
     </div>
     <div class="save_button">
@@ -68,8 +75,9 @@
   import marked from 'marked'
   import hightlight from 'highlight.js'
   import 'highlight.js/styles/atom-one-light.css'
-
+  
   import {request} from 'network/request'
+
   marked.setOptions({
     hightlight: function (code) {
       return hightlight.hightlightAuto(code).value
@@ -85,7 +93,12 @@
           data: '',
           labels: [],
           inputVisible: false,
-          inputValue: ''
+          inputValue: '',
+          fullScreeView: false,
+          editHidden: false,
+          subfieldView: false,
+          subfieldEdit: false,
+          editShow: false
         }
       },
       mounted() {
@@ -104,6 +117,7 @@
           })
         }
       },
+
       methods: {
         // 编译Markdown
         compiledMarkdown: function () {
@@ -138,34 +152,31 @@
               message: '标题不能为空',
               type: 'warning',
             });
-          }
-          if (this.content.length === 0) {
+          }else if (this.labels.length === 0) {
+            this.$notify({
+              title: "警告",
+              message: "标签不能为空",
+              type: "warning",
+              offset: 100
+            })
+            
+          } else if (this.gist.length === 0) {
+            this.$notify({
+              title: "警告",
+              message: "简介不能为空",
+              type: "warning",
+              offset: 100
+            })
+          } else if (this.content.length === 0) {
             this.$notify({
               title: '警告',
               message: '内容不能为空',
               type: 'warning',
               offset: 100
             })
-          }
-          if (this.labels.length === 0) {
-            this.$notify({
-              title: "警告",
-              message: "标签不能为空",
-              type: "warning",
-              offset: 200
-            })
-          }
-          if (this.gist.length === 0) {
-            this.$notify({
-              title: "警告",
-              message: "简介不能为空",
-              type: "warning",
-              offset: 300
-            })
-          }
-          if (this.$route.params.id) {
+          } else if (this.$route.params.id) {
             // 若id存在则更新文章
-            console.log(this.labels);
+            //console.log(this.labels);
             let data = {
               _id: this.$route.params.id,
               title: this.title,
@@ -215,6 +226,27 @@
         },
         goBack: function () {
           this.$router.go(-1)
+        },
+        previewClick() {
+          this.editHidden = true
+          this.fullScreeView = true
+          this.subfieldView = false
+          this.subfieldEdit = false
+          this.editShow = false
+        },
+        subfieldClick() {
+          this.subfieldView = true
+          this.subfieldEdit = true
+          this.editHidden = false
+          this.fullScreeView = false
+          this.editShow = false
+        },
+        editClick() {
+          this.editShow = true
+          this.editHidden = false
+          this.fullScreeView = false
+          this.subfieldView = false
+          this.subfieldEdit = false
         },
         // 标签相关方法
         handleClose(tag) {
