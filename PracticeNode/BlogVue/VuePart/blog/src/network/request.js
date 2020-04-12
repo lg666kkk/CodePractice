@@ -12,14 +12,14 @@ export function request(config) {
     config.headers = {'Content-Type':'application/x-www-form-urlencoded'}
   }
   instance.interceptors.request.use(config => {
-    //console.log(config)
+    //console.log("req",config)
     return config
   }, err => {
     console.log(err)
   });
 
   instance.interceptors.response.use(res => {
-    //console.log(res.data)
+    //console.log("res",res.data)
     return res
   }, err => {
     console.log(err)

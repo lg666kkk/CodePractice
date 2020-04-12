@@ -1,5 +1,7 @@
 .article_wrap {
   padding: 40px;
+  width: 800px;
+  height: 300px;
 }
 
 .article_title {
@@ -20,7 +22,9 @@
   font-size: 14px;
   padding-top: 8px;
 }
-
+.article_info_date {
+  padding-right: 10px;
+}
 .tag_margin {
   margin: 3px;
 }
@@ -28,6 +32,7 @@
 .article_gist {
   text-align: left;
   padding-top: 40px;
+  padding-left: 254px;
   padding-bottom: 40px;
   font-size: 16px;
 }
@@ -49,7 +54,7 @@
 
 .article_underline {
   height: 1px;
-  width: 40px;
+  width: 200px;
   background: #545455;
   margin: 80px auto 0;
 }

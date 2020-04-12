@@ -16,7 +16,7 @@ router.get('/test', function (req, res) {
  * @param password  {string} 密码  md5加密
  */
 router.post('/api/admin/signup', urlencodedParser, function (req, res, next) {
-  console.log(req.body);
+  //console.log(req.body);
   req.body.password = md5(md5(req.body.password))
   new Db.User(req.body).save(function (err) {
     if (err) {
@@ -98,7 +98,17 @@ router.get('/api/articleDetail/:id', function (req, res, next) {
  * 文章保存
  */
 router.post('/api/admin/saveArticle', urlencodedParser, function (req, res, next) {
-  new Db.Article(req.body.articleInformation).save(function (err) {
+  let info = req.body
+  let labels = []
+  for (let key in info) {
+    if (key.indexOf('labels') !== -1) {
+      labels.push(info[key])
+    }
+  }
+  //console.log(labels);
+  info.labels = labels
+  //console.log(info);
+  new Db.Article(info).save(function (err) {
     if (err) {
       return next(err)
     }
@@ -106,7 +116,7 @@ router.post('/api/admin/saveArticle', urlencodedParser, function (req, res, next
   })
 })
 router.post('/api/admin/updateArticle', urlencodedParser, function (req, res, next) {
-  let info = req.body.articleInformation
+  let info = req.body
   Db.Article.find({_id: req.body.id}, function (err, data) {
     if (err) {
       return next(err)

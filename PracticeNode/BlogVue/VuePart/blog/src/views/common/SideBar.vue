@@ -16,6 +16,11 @@
             <span>关于</span>
           </li>
         </router-link>
+        <router-link to="/tag">
+          <li class="nav">
+            <span>标签</span>
+          </li>
+        </router-link>
         <router-link to="/admin/signin">
           <li class="nav">
             <span>登录</span>

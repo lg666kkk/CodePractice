@@ -5,8 +5,8 @@
       <div class="article_wrap" v-for="(item, key) in articleList" :key="key">
         <div class="article_title" @click="articleDetail( item._id )">{{ item.title }}</div>
         <div class="article_info">
-          <span class="article_info_date">发表于：{{ item.date }}</span>
-          <span class="article_info_label">标签：
+          <span class="article_info_date">发表于:{{ item.date }}</span>
+          <span class="article_info_label">标签:
           <span v-if="item.labels.length === 0">未分类</span>
           <el-tag v-else class="tag_margin" type="primary" v-for="(tag, key) in item.labels" :key="key">{{ tag }}</el-tag>
           </span>
