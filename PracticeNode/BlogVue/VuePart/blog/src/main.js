@@ -10,11 +10,12 @@ import {
   Message,
   Tag,
   Tooltip,
-  Notification
+  Notification,
+  MessageBox
 } from 'element-ui';
 // 导入vue-resource,与后端进行数据交互
 //import VueResource from 'vue-resource'
-const components = [Button, Input, Message, Tag, Tooltip, Notification]
+const components = [Button, Input, Message, Tag, Tooltip, Notification, MessageBox]
 // 全局注册了所有组件
 components.forEach((item) => {
   Vue.component(item.name, item)
@@ -22,6 +23,8 @@ components.forEach((item) => {
 
 Vue.prototype.$message = Message;
 Vue.prototype.$notify = Notification
+Vue.prototype.$confirm = MessageBox.confirm
+Vue.prototype.$prompt = MessageBox.prompt
 
 Vue.config.productionTip = false
 

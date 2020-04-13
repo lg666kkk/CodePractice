@@ -138,7 +138,7 @@ router.post('/api/admin/updateArticle', urlencodedParser, function (req, res, ne
  * 文章删除
  */
 router.post('/api/admin/deleteArticle', urlencodedParser, function (req, res, next) {
-  Db.Article.remove({_id: req.body._id}, function (err) {
+  Db.Article.deleteOne({_id: req.body._id}, function (err) {
     if (err) {
       return next(err)
     }
