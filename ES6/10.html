@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script type='text/javascript'>
+    // console.log('\172' == 'z');
+    let template = `
+    <ul>
+      <% for(let i=0; i < data.supplies.length; i++) { %>
+        <li><%= data.supplies[i] %></li>
+      <% } %>
+    </ul>
+    `;
+    let evalExpr = /<%=(.+?)%>/g;
+    let expr = /<%([\s\S]+?)%>/g;
+
+    template = template
+      .replace(evalExpr, '`); \n  echo( $1 ); \n  echo(`')
+      .replace(expr, '`); \n $1 \n  echo(`');
+
+    template = 'echo(`' + template + '`);';
+    console.log(template);
+    let a = 5;
+    let b = 10;
+
+    console.log(tag`Hello ${ a + b } world ${ a * b }`);
+    // 等同于
+    tag(['Hello ', ' world ', ''], 15, 50);
+  </script>
+</body>
+</html>
