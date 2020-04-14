@@ -3,6 +3,8 @@ import router from './router'
 import App from './App.vue'
 // 导入ui样式
 import 'element-ui/lib/theme-chalk/index.css';
+import hight from 'highlight.js';
+import 'highlight.js/styles/atom-one-dark.css';
 
 import {
   Button,
@@ -19,6 +21,14 @@ const components = [Button, Input, Message, Tag, Tooltip, Notification, MessageB
 // 全局注册了所有组件
 components.forEach((item) => {
   Vue.component(item.name, item)
+})
+
+//在main.js定义自定义指令 
+Vue.directive('highlight',function (el) {
+  let blocks = el.querySelectorAll('pre code');
+  blocks.forEach((block)=>{
+    hight.highlightBlock(block)
+  })
 })
 
 Vue.prototype.$message = Message;

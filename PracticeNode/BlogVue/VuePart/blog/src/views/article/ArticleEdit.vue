@@ -61,7 +61,7 @@
           </el-tooltip>
       </div>
       <textarea class="markdown_input" v-model="content" @input="update" :class="{editHidden: editHidden, editShow: editShow,subfieldEdit: subfieldEdit}"></textarea>
-      <div class="markdown_compiled" :class="{fullScreeView:fullScreeView, subfieldView: subfieldView}" v-html="compiledMarkdown()"></div>
+      <div class="markdown_compiled" :class="{fullScreeView:fullScreeView, subfieldView: subfieldView}" v-html="compiledMarkdown()" v-hightlight></div>
       <div class="clear"></div>
     </div>
     <div class="save_button">
@@ -74,7 +74,7 @@
   import _ from 'lodash'
   import marked from 'marked'
   import hightlight from 'highlight.js'
-  import 'highlight.js/styles/atom-one-light.css'
+  import 'highlight.js/styles/atom-one-dark.css'
   
   import {request} from 'network/request'
 
@@ -221,7 +221,7 @@
                 type: "success"
               })
             })
-            self.$router.push('/articleList')
+            self.$router.push('/admin/articleList')
           }
         },
         goBack: function () {

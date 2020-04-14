@@ -9,6 +9,7 @@ const Article = () => import('views/article/Article.vue')
 const About = () => import('views/profile/About.vue')
 const ArticleEdit = () => import('views/article/ArticleEdit.vue')
 const ArticleList = () => import('views/article/ArticleList.vue')
+const ArticleDetail = () => import('views/article/ArticleDetail.vue')
 const routers = [
   {
     path:'/',
@@ -33,6 +34,10 @@ const routers = [
   {
     path: '/admin/articleList',
     component: ArticleList
+  },
+  {
+    path: '/articleDetail/:id',
+    component: ArticleDetail
   }
 ] 
 export default new Router({

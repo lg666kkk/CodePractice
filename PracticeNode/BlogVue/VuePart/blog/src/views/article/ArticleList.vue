@@ -48,7 +48,7 @@
       },
       methods: {
         Click(id) {
-          this.$router.push(`/api/articleDetail/${id}`)
+          this.$router.push(`/articleDetail/${id}`)
         },
         updateArticle(id) {
           this.$router.push('/admin/articleEdit/'+ id)
@@ -98,5 +98,5 @@
 </script>
 
 <style scoped>
-  @import '../../assets/css/article.css'
+  @import '../../assets/css/article.css';
 </style>
