@@ -2,7 +2,7 @@
   float: left;
   width: 262px;
   margin-right: 40px;
-  height: 6000px;
+  height: 900px;
   background-color: red;
 }
 /**若屏幕宽度小于767px，则不显示左侧菜单 */
@@ -27,14 +27,19 @@ padding: 20px 0;
 }
 
 .nav {
-padding: 8px 30px;
-text-align: left;
+  padding: 8px 30px;
+  text-align: left;
 }
-
+.router_picture {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
 .info {
-margin-top: 10px;
-padding: 20px;
-background: white;
+  margin-top: 10px;
+  padding: 20px;
+  background: white;
 }
 
 .info_name {
@@ -65,13 +70,39 @@ font-size: 14px;
 }
 
 .communication {
-padding-top: 20px;
+  margin-top: 20px;
+  padding-left: 8px;
+}
+.communication_item {
+  margin-top: 10px;
+  text-align: left;
+}
+.communication_item:hover{
+  background-color: red;
+}
+.communication_item .picture{
+  margin-right: 5px;
+  vertical-align: middle;
+}
+.communication_item .text {
+  font-size: 16px;
+  padding-left: 2px;
+  text-align: left;
+}
+.communication_item .facebook {
+  width: 18px;
+  height: 21px;
+}
+.communication_item .github {
+  width: 21px;
+  height: 23px;
+}
+.communication_item .twitter {
+  width: 20px;
+  height: 20px;
+}
+.communication_item .qq {
+  width: 19px;
+  height: 16px;
 }
 
-.communication_item {
-display: inline-block;
-width: 40%;
-font-size: 14px;
-font-weight: 600;
-padding: 5px;
-}
