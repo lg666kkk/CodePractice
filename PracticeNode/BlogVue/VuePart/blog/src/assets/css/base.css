@@ -7,6 +7,7 @@
 }
 body, html{
   /* background-color: #cccccc; */
+  
 }
 /* html, body{
   margin: 0;
@@ -63,12 +64,17 @@ h2 {
 }
 #main {
   overflow: hidden;
-  width: 960px;
+  width: 100%;
+  box-sizing: border-box;
   text-align: center;
-  margin: auto;
+  padding-left: 100px;
+  margin:0px 20px 0 0;
 }
 .black_line {
   width: 100%;
   height: 2px;
   background: #000;
+}
+.article_content pre {
+  width: 90%;
 }

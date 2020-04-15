@@ -1,7 +1,7 @@
 <template>
   <div>
     <side-bar></side-bar>
-    <div id="conent">
+    <div id="content">
       <div class="article_wrap" v-for="(item, key) in  articleList" :key="key">
         <div class="article_title" @click="Click( item._id )">{{ item.title }}</div>
         <div class="article_info">
@@ -93,10 +93,15 @@
           )
         }
       }
-
   }
 </script>
 
 <style scoped>
   @import '../../assets/css/article.css';
+  #content {
+    height: 529px;
+    overflow: hidden;
+    overflow-y: scroll;
+    background-color: blue;
+  }
 </style>

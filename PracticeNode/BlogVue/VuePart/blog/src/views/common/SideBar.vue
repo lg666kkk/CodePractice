@@ -45,14 +45,12 @@
       </ul>
     </nav>
     <div class="info">
-      <img src="~assets/img/head.jpg" alt="head">
-      <div class="info_name">LiGuang</div>
       <div class="archive">
         <ul>
           <router-link to="/article">
             <li>
-              <span class="archive_count">{{ articleNumber }}</span>
               <span class="archive_name">日志</span>
+              <span class="archive_count">{{ articleNumber }}</span> 
             </li>
           </router-link>
         </ul>

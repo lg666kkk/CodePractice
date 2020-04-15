@@ -1,5 +1,10 @@
 .article_wrap {
   padding: 40px;
+  margin-top: 10px;
+  border-radius: 5px;
+  margin-left: 10px;
+  margin-right: 30px;
+  border:1px solid red;
   /* background-color:rgba(0, 191, 255, 0.2); */
 }
 .article_title {
@@ -29,9 +34,12 @@
 
 .article_gist {
   text-align: left;
-  padding-top: 40px;
+  padding-top: 60px;
   padding-bottom: 40px;
   font-size: 16px;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
 }
 
 .article_button {

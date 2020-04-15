@@ -1,9 +1,10 @@
 #Menu_Left {
   float: left;
   width: 240px;
-  height: 800px;
-  margin-right: 20px;
+  height: 529px;
+  margin-right: 30px;
   text-align: center;
+  background-color: red;
 }
 /**若屏幕宽度小于767px，则不显示左侧菜单 */
 @media (max-width: 767px) {
@@ -19,15 +20,15 @@ background: #f5f7f9;
 .Menu_name {
 background: rgb(38, 42, 48);
 color: white;
-padding: 10px 0;
+padding: 20px 0;
 }
 nav {
 background: white;
-padding: 20px 0;
+padding: 20px 0 0;
 }
 
 .nav {
-  padding: 8px 30px;
+  padding: 6px 30px;
   text-align: left;
 }
 .router_picture {
@@ -37,8 +38,7 @@ padding: 20px 0;
   margin-right: 5px;
 }
 .info {
-  margin-top: 10px;
-  padding: 20px;
+  padding: 15px;
   background: white;
 }
 
@@ -52,21 +52,16 @@ width: 120px;
 height: 120px;
 }
 
-.archive {
-padding-top: 20px;
-}
-
 .archive .archive_count {
-display: block;
 color: #222;
 font-weight: 600;
 font-size: 16px;
 }
 
 .archive .archive_name {
-display: block;
 color: #999;
-font-size: 14px;
+font-size: 20px;
+padding-right: 5px;
 }
 
 .communication {
