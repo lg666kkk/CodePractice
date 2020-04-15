@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .wrapper {
+      height: 200px;
+      background-color: red;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <ul class="content">
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+      <li>例表数据</li>
+    </ul>
+  </div>
+  <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/better-scroll'></script>
+  <script type='text/javascript'>
+    //console.log(BScroll);
+    //默认情况下BScroll是不可以事实监控滚动位置的
+    const bs = new BScroll(document.querySelector('.wrapper'), {
+      probeType: 2, // 0,1不会实时监听位置，2 在手指滚动的过程中侦测，手指离开后的惯性滚动不侦测，3只要是滚动都侦测
+      click: true,
+      pullUpLoad: true // 上拉加载更多
+    })
+    bs.on("pullingUp", () => {
+      console.log("上拉加载更多");
+      // 发送网络请求，请求更多页数据
+      setTimeout(() => {
+        bs.finishPullUp()
+      }, 2000)
+    })
+    bs.on('scroll', (position) => {
+      //console.log(position);
+    })
+  </script>
+</body>
+</html>

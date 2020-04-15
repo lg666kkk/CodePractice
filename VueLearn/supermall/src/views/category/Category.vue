@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrapper">
     <ul class="content">
       <li>分类列表1</li>
       <li>分类列表2</li>
@@ -139,8 +139,13 @@
   import BScroll from 'better-scroll'
   export default {
       name:'Category',
+      data() {
+        return {
+          scroll: null
+        }
+      },
       mounted() {
-        new BScroll('.content', {
+        this.scroll = new BScroll(document.querySelector(".wrapper"), {
 
         })
       },
@@ -148,5 +153,10 @@
 </script>
 
 <style scoped>
-
+.wrapper {
+  height: 150px;
+  background-color: red;
+  /*overflow: auto;*/
+  overflow: hidden;
+}
 </style>

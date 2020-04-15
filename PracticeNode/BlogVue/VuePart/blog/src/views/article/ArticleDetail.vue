@@ -1,7 +1,7 @@
 <template>
   <div id="articleDetail">
     <side-bar></side-bar>
-    <div class="content">
+    <div id="content">
       <div class="article_warp">
         <div class="article_title article_detail_title">{{ article.title }}</div>
         <div class="article_info">

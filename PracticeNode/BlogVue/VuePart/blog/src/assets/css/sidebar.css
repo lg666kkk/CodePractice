@@ -1,9 +1,9 @@
 #Menu_Left {
   float: left;
-  width: 262px;
-  margin-right: 40px;
-  height: 900px;
-  background-color: red;
+  width: 240px;
+  height: 800px;
+  margin-right: 20px;
+  text-align: center;
 }
 /**若屏幕宽度小于767px，则不显示左侧菜单 */
 @media (max-width: 767px) {
@@ -78,7 +78,7 @@ font-size: 14px;
   text-align: left;
 }
 .communication_item:hover{
-  background-color: red;
+  background-color: #cccc;
 }
 .communication_item .picture{
   margin-right: 5px;

@@ -16,6 +16,8 @@
         <div class="article_underline"></div>
       </div>
     </div>
+    <side-bar-right></side-bar-right>
+    <footer></footer>
   </div>
 </template>
 
@@ -25,7 +27,7 @@
   export default {
       name:'Article',
       components: {
-        SideBar
+        SideBar,
       },
       data() {
         return {
@@ -51,5 +53,5 @@
 </script>
 
 <style scoped>
-  @import '../../assets/css/article.css'
+  @import '../../assets/css/article.css';
 </style>

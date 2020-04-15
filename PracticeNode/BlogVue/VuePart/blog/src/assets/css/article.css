@@ -1,9 +1,7 @@
 .article_wrap {
   padding: 40px;
-  width: 800px;
-  height: 300px;
+  /* background-color:rgba(0, 191, 255, 0.2); */
 }
-
 .article_title {
   display: inline-block;
   color: #222;
@@ -32,13 +30,13 @@
 .article_gist {
   text-align: left;
   padding-top: 40px;
-  padding-left: 254px;
   padding-bottom: 40px;
   font-size: 16px;
 }
 
 .article_button {
   display: inline-block;
+  margin-top: 2px;
   text-align: center;
   padding: 3px 12px;
   border: 2px solid #222;
@@ -58,7 +56,7 @@
   height: 1px;
   width: 200px;
   background: #545455;
-  margin: 80px auto 0;
+  margin: 60px auto 0;
 }
 
 .el-tag {
