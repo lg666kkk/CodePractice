@@ -95,6 +95,12 @@ router.get('/api/articleDetail/:id', function (req, res, next) {
   })
 })
 /**
+ * 获取标签
+ */
+router.get('/api/tag', (req, res, next) => {
+  Db.Article.find()
+})
+/**
  * 文章保存
  */
 router.post('/api/admin/saveArticle', urlencodedParser, function (req, res, next) {
@@ -115,6 +121,9 @@ router.post('/api/admin/saveArticle', urlencodedParser, function (req, res, next
     res.send()
   })
 })
+/**
+ * 文章更新
+ */
 router.post('/api/admin/updateArticle', urlencodedParser, function (req, res, next) {
   let info = req.body
   Db.Article.find({_id: req.body.id}, function (err, data) {

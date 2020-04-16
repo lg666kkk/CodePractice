@@ -117,7 +117,6 @@
           })
         }
       },
-
       methods: {
         // 编译Markdown
         compiledMarkdown: function () {
@@ -144,6 +143,7 @@
           if (ss < 10) ss = '0' + ss
           this.date = y + '-' + m + '-' + d + ' ' + hh + ':' + mm + ':' + ss
         },
+        // 保存文章
         save () {
           let self = this
           if (this.title.length === 0) {
@@ -224,9 +224,11 @@
             self.$router.push('/admin/articleList')
           }
         },
+        // 返回按钮触发事件
         goBack: function () {
           this.$router.go(-1)
         },
+        // 预览模式
         previewClick() {
           this.editHidden = true
           this.fullScreeView = true
@@ -234,6 +236,7 @@
           this.subfieldEdit = false
           this.editShow = false
         },
+        // 分栏模式
         subfieldClick() {
           this.subfieldView = true
           this.subfieldEdit = true
@@ -241,6 +244,7 @@
           this.fullScreeView = false
           this.editShow = false
         },
+        // 编辑模式
         editClick() {
           this.editShow = true
           this.editHidden = false
