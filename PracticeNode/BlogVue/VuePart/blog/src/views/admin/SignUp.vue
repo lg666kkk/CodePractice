@@ -1,6 +1,7 @@
 <template>
   <div id="sign-part">
-      <h1>后台管理页面</h1>
+      <h1>后台管理登录页面</h1>
+      <el-input type="email" v-model="email" placeholder="请输入邮箱" class="email"></el-input>
       <el-input v-model="username" placeholder="请输入用户名" class="username"></el-input>
       <el-input placeholder="请输入密码" v-model="password" show-password class="password"></el-input>
       <el-button class="register" @click="signup">注册</el-button>
@@ -18,7 +19,7 @@
         return {
           username: '',
           password: '',
-          hasName: ''
+          email: ''
         }
       },
       methods: {
@@ -29,9 +30,10 @@
           } else {
             request({
             method: 'get',
-            url : `/api/admin/getUser/${this.username}`
+            url : `/api/admin/getUser/${this.email}`
           }).then(res => {
               // 用户名存在
+              console.log(res);
               //console.log("res", res.data.username);
               //console.log("username",_this.username);
               if (res.data.username === self.username) {
@@ -76,6 +78,7 @@
           let self = this
           let data = {
             username : this.username,
+            email : this.email,
             password : this.password
           }
           // 前端验证用户名和密码是否合法

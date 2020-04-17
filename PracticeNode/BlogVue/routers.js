@@ -14,29 +14,43 @@ router.get('/test', function (req, res) {
  * 注册
  * @param username  {string} 用户名
  * @param password  {string} 密码  md5加密
+ * @param email  {string} 邮箱
+ * @param identify  {string} 身份
+ * @param introduce  {string} 介绍
  */
 router.post('/api/admin/signup', urlencodedParser, function (req, res, next) {
-  //console.log(req.body);
+  console.log(req.body);
   req.body.password = md5(md5(req.body.password))
   new Db.User(req.body).save(function (err) {
     if (err) {
       return next(err)
     }
-    res.send()
+    res.json({
+      msg: "注册成功"
+    })
   })
 })
 /***
  * 登录
+ * @param username  {string} 用户名
+ * @param password  {string} 密码
+ * @param email  {string} 邮箱
+ * @param identify  {string} 身份
+ *    要根据身份分配权限
  */
 router.post('/api/admin/signin', urlencodedParser,function (req, res, next) {
+  //console.log(req.body);
   req.body.password = md5(md5(req.body.password))
   Db.User.findOne({
     username : req.body.username,
-    password : req.body.password
+    email : req.body.email,
+    password : req.body.password,
+    identify : req.body.identify
   } , function (err , docs) {
     if (err) {
       next(err)
     }
+    //console.log("doc", docs);
     if (docs !== null) {
       res.json({
         stateCode : 2,
@@ -45,28 +59,35 @@ router.post('/api/admin/signin', urlencodedParser,function (req, res, next) {
     } else {
       res.json({
         stateCode : 1,
-        msg : "用户名或密码错误"
+        msg : "邮箱或密码错误"
       })
     }
   })
   
 })
 /**
- * 根据用户名查找用户
+ * 根据邮箱查找用户
+ * @param email  {string} 邮箱
  */
-router.get('/api/admin/getUser/:username', function (req, res) {
+router.get('/api/admin/getUser/:email', function (req, res, next) {
   /**
    * 使用req.query可以查到指定用户名的所有内容
    * 但使用req.params却查不到任何内容？？？？
    *  一眼懵逼，看前端咋做的？？
    */
-  Db.User.findOne({ username: req.params.username }, function (err, docs) {
+  console.log(req.params);
+  Db.User.findOne({ 
+    email: req.params.email
+  }, function (err, docs) {
     if (err) {
-      console.error(err)
-      return
+      //console.error(err)
+      next(err)
     }
-    //console.log(docs.password);
+    //console.log(docs);
     res.send(docs)
+    // res.json({
+    //   msg: "已经查到用户消息"
+    // })
   })
 })
 /**

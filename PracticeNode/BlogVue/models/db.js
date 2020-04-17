@@ -10,6 +10,18 @@ let UserSchema = new Schema({
   password: {
     type: String,
     required: true
+  },
+  email: {
+    type: String,
+    required: true
+  },
+  introduce: {
+    type: String,
+    required: true
+  },
+  identity: {
+    type: String,
+    required: true
   }
 })
 let ArticleSchema = new Schema({

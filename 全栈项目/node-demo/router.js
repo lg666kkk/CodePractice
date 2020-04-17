@@ -1,5 +1,6 @@
 const express= require('express')
 const User = require('./module/db')
+const Profile = require('./module/profile')
 const gravatar = require('gravatar');
 const router = express.Router()
 const md5 = require('blueimp-md5')
@@ -15,8 +16,8 @@ const keys ={
   secretKey: 'secret'
 }
 // 注册
-router.post('/register', urlencodedParser,function (req, res) {
-  console.log(req.body);
+router.post('/api/user/register', urlencodedParser,function (req, res) {
+  //console.log(req.body);
   // 查询数据库中是否拥有邮箱
   User.findOne({email:req.body.email})
     .then((user) => {
@@ -43,7 +44,7 @@ router.post('/register', urlencodedParser,function (req, res) {
  * 登录
  * return token -- 使用jsonwebtoken
 */ 
-router.post('/login', urlencodedParser,function (req, res) {
+router.post('/api/user/login', urlencodedParser,function (req, res) {
   const password =  md5(md5(req.body.password) + "lgtxwd")
   User.findOne({email: req.body.email})
     .then((user) => {
@@ -81,12 +82,95 @@ router.post('/login', urlencodedParser,function (req, res) {
     })
 })
 // 获取数据，需要验证token,使用possport-jwt来实现
-router.get('/current', passport.authenticate("jwt", {session: false}),function (req, res) {
+router.get('/api/user/current', passport.authenticate("jwt", {session: false}),function (req, res) {
   res.json({
     id: req.user.id,
     username: req.user.username,
     identity: req.user.identity,
     email: req.user.email 
+  })
+})
+/**
+ * 添加信息
+ */
+router.post('/api/profile/add', passport.authenticate("jwt", {session: false}),urlencodedParser, (req, res) => {
+  const profileFides = {}
+  if (req.body.type) profileFides.type = req.body.type 
+  if (req.body.descripe) profileFides.descripe = req.body.descripe 
+  if (req.body.income) profileFides.income = req.body.income 
+  if (req.body.expend) profileFides.expend = req.body.expend 
+  if (req.body.cash) profileFides.cash = req.body.cash 
+  if (req.body.remark) profileFides.remark = req.body.remark 
+  new Profile(profileFides).save()
+    .then((profile) => {
+      res.json(profile)
+    })
+})
+/**
+ * 获取所有信息
+ */
+router.get('/api/profile', passport.authenticate("jwt", {session: false}), (req, res, next) => {
+  Profile.find()
+    .then(profile => {
+      if (!profile) {
+        return res.status(404).json({
+          msg: '没有任何内容'
+        })
+      }
+      res.json(profile)
+    })
+    .catch(err => {
+      res.status(404).json(err)
+    })
+})
+/**
+ * 获取单个信息
+ */
+router.get('/api/profile/:id', passport.authenticate("jwt", {session: false}), (req, res, next) => {
+  Profile.findOne({
+    _id: req.params.id
+  }).then(profile => {
+      if (!profile) {
+        return res.status(404).json({
+          msg: '没有任何内容'
+        })
+      }
+      res.json(profile)
+    }).catch(err => {
+      res.status(404).json(err)
+    })
+})
+/**
+ * 编辑
+ */
+router.post('/api/profile/edit/:id', passport.authenticate("jwt", {session: false}),urlencodedParser, (req, res) => {
+  const profileFides = {}
+  if (req.body.type) profileFides.type = req.body.type 
+  if (req.body.descripe) profileFides.descripe = req.body.descripe 
+  if (req.body.income) profileFides.income = req.body.income 
+  if (req.body.expend) profileFides.expend = req.body.expend 
+  if (req.body.cash) profileFides.cash = req.body.cash 
+  if (req.body.remark) profileFides.remark = req.body.remark 
+  Profile.findOneAndUpdate(
+    { _id: req.params.id },
+    { $set: profileFides },
+    { new: true }
+  ).then(profile => {
+    res.json(profile)
+  })
+})
+/**
+ * 删除
+ */
+router.delete('/api/profile/delete/:id', passport.authenticate("jwt", {session: false}), (req, res) => {
+  Profile.findOneAndRemove({
+    _id: req.params.id
+  })
+  .then(profile => {
+    res.json("删除成功")
+  })
+  .catch(err => {
+    res.status(400).json(err)
   })
 })
 module.exports = router

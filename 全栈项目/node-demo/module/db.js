@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+mongoose.set('useFindAndModify', false)
 const Schema = mongoose.Schema
 mongoose.connect('mongodb://localhost/project',{ useNewUrlParser: true,  useUnifiedTopology: true });
 
