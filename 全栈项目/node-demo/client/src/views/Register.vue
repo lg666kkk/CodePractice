@@ -110,9 +110,9 @@
         submitFrom(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
-              this.registerUser = qs.stringify(this.registerUser)
+              //this.registerUser = qs.stringify(this.registerUser)
               // console.log(this.registerUser);
-              this.$axios.post('/api/user/register', this.registerUser,
+              this.$axios.post('/api/user/register', qs.stringify(this.registerUser),
                 {headers:{'Content-Type':'application/x-www-form-urlencoded'}}
               )
                 .then(() => {
@@ -120,9 +120,6 @@
                     type: "success",
                     message: "注册成功"
                   })
-                })
-                .catch(err => {
-                  console.log(err);
                 })
                 this.$router.push('/login')
             }

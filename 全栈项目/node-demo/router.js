@@ -60,7 +60,7 @@ router.post('/api/user/login', urlencodedParser,function (req, res) {
           avatart: user.avatart,
           identity: user.identity
         }
-        jwt.sign(rules, keys.secretKey,{expiresIn:3600},function (err, token) {
+        jwt.sign(rules, keys.secretKey,{expiresIn:10},function (err, token) {
           if (err) {
             return res.status(500).json({
               message: "token生成失败"

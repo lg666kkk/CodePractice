@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Index from '../views/index.vue'
 const Register = () => import('../views/Register.vue')
 const NotFound = () => import('../views/NotFound.vue')
+const Login = () => import('../views/Login.vue')
 Vue.use(VueRouter)
 
   const routes = [
@@ -21,10 +22,16 @@ Vue.use(VueRouter)
     component: Register
   },
   {
+    path: "/login",
+    name: "login",
+    component: Login
+  },
+  {
     path: '*',
     name: 'notFound',
     component: NotFound
-  }
+  },
+  
 ]
 
 const router = new VueRouter({
@@ -32,5 +39,13 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
-
+// 路由守卫
+router.beforeEach((to, from, next) => {
+  const isLogin = localStorage.eleToken ? true : false;
+  if (to.path == '/register' || to.path == '/login') {
+    next()
+  } else {
+    isLogin ? next() : next('/login')
+  }
+})
 export default router
