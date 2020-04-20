@@ -25,3 +25,10 @@
 | /api/admin/updateArticle | POST     |         | title,date,content,gist,labels | 文章更新           |
 | /api/admin/deleteArticle | POST     |         |                                | 文章删除           |
 
+使用gravatar来获取头像
+使用jsonwebtoken来生成token
+使用md5加密
+使用passport-jwt验证token
+
+### 目前未解决的问题
+1. 每篇博客的阅读原文没有登录时无法查看

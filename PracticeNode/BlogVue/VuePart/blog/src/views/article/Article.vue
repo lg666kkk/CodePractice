@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="black_line"></div>
     <side-bar></side-bar>
     <div id="content">
       <div class="article_wrap" v-for="(item, key) in articleList" :key="key">
@@ -53,8 +54,9 @@
 <style scoped>
   @import '../../assets/css/article.css';
   #content {
-    height: 529px;
+    height: 536px;
     overflow: hidden;
     overflow-y: scroll;
+    text-align: center;
   }
 </style>

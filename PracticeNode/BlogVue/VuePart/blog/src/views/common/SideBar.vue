@@ -30,16 +30,22 @@
             <span>登录</span>
           </li>
         </router-link>
-        <router-link to="/admin/articleList">
-          <li class="nav">
-            <img src="~assets/img/SiderBar/管理.svg" class="router_picture">
-            <span>管理</span>
-          </li>
-        </router-link>
         <router-link to="/admin/articleEdit">
           <li class="nav" >
             <img src="~assets/img/SiderBar/写文章.svg" class="router_picture">
             <span>写文章</span>
+          </li>
+        </router-link>
+        <router-link to="/admin/articleList">
+          <li class="nav">
+            <img src="~assets/img/SiderBar/管理.svg" class="router_picture">
+            <span>文章管理</span>
+          </li>
+        </router-link>
+        <router-link to="/index">
+          <li class="nav" >
+            <img src="~assets/img/SiderBar/后台管理.svg" class="router_picture">
+            <span>后台管理</span>
           </li>
         </router-link>
       </ul>

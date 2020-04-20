@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="black_line"></div>
     <side-bar></side-bar>
     <div id="content">
       <div class="article_wrap" v-for="(item, key) in  articleList" :key="key">
@@ -23,6 +24,7 @@
 
 <script>
   import { request } from 'network/request'
+  import qs from 'qs'
   import SideBar from '../common/SideBar'
   export default {
       name:'ArticleList',
@@ -55,9 +57,10 @@
         },
         deleteArticle(id) {
           let self = this
-          let data = {
+          let data_id = {
             _id: id
           }
+          let data = qs.stringify(data_id) 
           this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
@@ -66,16 +69,16 @@
             request({
               method: 'post',
               url : '/api/admin/deleteArticle',
-              data
+              data,
+              headers:{'Content-Type':'application/x-www-form-urlencoded'}
             }).then(res => {
               self.$message({
                 type: 'success',
                 message: '删除成功!'
-              });
+              })
               self.fetchData()
             })
-            
-          }).catch(() => {
+          }).catch((error) => {
             self.$message({
               type: 'info',
               message: '已取消删除'
@@ -99,9 +102,10 @@
 <style scoped>
   @import '../../assets/css/article.css';
   #content {
-    height: 529px;
+    height: 536px;
     overflow: hidden;
     overflow-y: scroll;
+    text-align: center;
     background-color: blue;
   }
 </style>

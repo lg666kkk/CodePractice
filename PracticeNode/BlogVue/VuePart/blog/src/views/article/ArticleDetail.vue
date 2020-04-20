@@ -1,5 +1,6 @@
 <template>
   <div id="articleDetail">
+    <div class="black_line"></div>
     <side-bar></side-bar>
     <div id="content">
       <div class="article_warp">
@@ -81,12 +82,15 @@
 
 <style scoped>
   @import '../../assets/css/article.css';
+  #content{
+    box-sizing: border-box;
+    text-align: center;
+  }
   .article_content {
     text-align: left;
     padding: 60px 0;
     margin-left: 340px;
     font-size: 18px;
-    text-align: left;;
   }
   .article_detail_title {
     cursor: default;

@@ -1,5 +1,6 @@
 <template>
   <div id="profile">
+    <div class="black_line"></div>
     <side-bar></side-bar>
     <div class="introduction">
       

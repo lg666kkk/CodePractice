@@ -1,6 +1,8 @@
 .edit {
   padding: 40px;
+  margin: 0 80px;
   font-size: 18px;
+  text-align: center;
   position: relative;
 }
 .return_button{
@@ -13,7 +15,7 @@
 }
 .edit_tag {
   text-align: left;
-  margin-top: 36px;
+  margin-top: 20px;
 }
 .edit_tag span {
   margin-right: 5px;

@@ -1,0 +1,35 @@
+const mongoose = require('mongoose');
+let Schema = mongoose.Schema
+mongoose.connect('mongodb://localhost/Blog1',{ useNewUrlParser: true,  useUnifiedTopology: true });
+// 设计集合结构
+let UserSchema = new Schema({
+  username: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
+  },
+  introduce: {
+    type: String,
+    required: true
+  },
+  identity: {
+    type: String,
+    required: true
+  },
+  avatar:{
+    type:String
+  },
+  date:{
+    type:Date,
+    default: Date.now
+  }
+})
+
+module.exports = User = mongoose.model('User', UserSchema)

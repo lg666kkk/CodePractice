@@ -73,6 +73,7 @@
 <script>
   import _ from 'lodash'
   import marked from 'marked'
+  import qs from 'qs'
   import hightlight from 'highlight.js'
   import 'highlight.js/styles/atom-one-dark.css'
   
@@ -185,11 +186,13 @@
               content: this.content,
               labels: this.labels
             }
+            data = qs.stringify(data)
             request({
               method: 'post',
               url: '/api/admin/updateArticle',
               data,
-              params
+              params,
+              headers:{'Content-Type':'application/x-www-form-urlencoded'}
             })
             .then(res => {
               self.$message({
@@ -210,10 +213,12 @@
               content: this.content,
               labels: this.labels
             }
+            data = qs.stringify(data)
             request({
               method: 'post',
               url: '/api/admin/saveArticle',
-              data
+              data,
+              headers:{'Content-Type':'application/x-www-form-urlencoded'}
             })
             .then(res => {
               self.$message({
