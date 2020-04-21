@@ -5,6 +5,9 @@ const Register = () => import('../views/Register.vue')
 const NotFound = () => import('../views/NotFound.vue')
 const Login = () => import('../views/Login.vue')
 const Home = () => import('../views/Home.vue')
+const InfoShow = () => import('../views/InfoShow.vue')
+const Fund = () => import('../views/Fund.vue')
+
 Vue.use(VueRouter)
 
   const routes = [
@@ -25,6 +28,16 @@ Vue.use(VueRouter)
         path:'/home',
         name: 'home',
         component:Home
+      },
+      {
+        path:'/infoshow',
+        name: 'infoshow',
+        component: InfoShow
+      },
+      {
+        path: '/fundlist',
+        name: 'fundlist',
+        component: Fund
       }
     ]
   },

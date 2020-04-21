@@ -68,7 +68,7 @@
                 {headers:{'Content-Type':'application/x-www-form-urlencoded'}}
               )
                 .then((res) => {
-                  console.log(res);
+                  //console.log(res);
                   // 拿到token
                   const { token } = res.data
                   // 将token存储到localStore中

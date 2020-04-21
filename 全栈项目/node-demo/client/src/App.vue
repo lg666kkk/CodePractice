@@ -7,11 +7,11 @@
   import jwt_decode from 'jwt-decode'
   export default {
       name:'App',
-      created() {
-        const decode = jwt_decode(localStorage.eleToken)
-        // 将token存储到vuex中
-        this.$store.dispatch('setAuthenticated', !this.isEmpty(decode))
-        this.$store.dispatch('setUser', decode)
+      mounted() {
+          const decode = jwt_decode(localStorage.eleToken)
+          // 将token存储到vuex中
+          this.$store.dispatch('setAuthenticated', !this.isEmpty(decode))
+          this.$store.dispatch('setUser', decode)
       },
       methods: {
         // 判断是否为空，为空返回一个true
@@ -27,4 +27,5 @@
   }
 </script>
 <style>
+
 </style>

@@ -21,8 +21,9 @@ axios.interceptors .request.use(config => {
   startLoading()
   if (localStorage.eleToken) {
     // 设置统一请求头
-    config.headers.Authorizations = localStorage.eleToken
+    config.headers.Authorization = localStorage.eleToken
   }
+  //console.log(config);
   return config
 }, err => {
   return Promise.reject(err)
