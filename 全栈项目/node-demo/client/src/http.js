@@ -17,7 +17,7 @@ function endLoading() {
 // 请求拦截
 axios.interceptors .request.use(config => {
   // 加载动画
-  //console.log(config);
+  console.log(config);
   startLoading()
   if (localStorage.eleToken) {
     // 设置统一请求头
