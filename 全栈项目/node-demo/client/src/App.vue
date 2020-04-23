@@ -8,10 +8,12 @@
   export default {
       name:'App',
       mounted() {
-          const decode = jwt_decode(localStorage.eleToken)
-          // 将token存储到vuex中
-          this.$store.dispatch('setAuthenticated', !this.isEmpty(decode))
-          this.$store.dispatch('setUser', decode)
+          if (localStorage.eleToken) {
+            const decode = jwt_decode(localStorage.eleToken)
+            // 将token存储到vuex中
+            this.$store.dispatch('setAuthenticated', !this.isEmpty(decode))
+            this.$store.dispatch('setUser', decode)
+          }
       },
       methods: {
         // 判断是否为空，为空返回一个true

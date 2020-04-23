@@ -1,7 +1,7 @@
 <template>
   <div class="dialog">
     <el-dialog 
-        title="添加资金信息"
+        :title="dialog.title"
         :visible.sync="dialog.show"
         :close-on-click-modal="false"
         :close-on-press-escape="false"
@@ -50,15 +50,6 @@
       name:'Dialog',
       data() {
         return {
-          formData: {
-            type:"",
-            descripe: "",
-            income: "",
-            expend:"",
-            cash:"",
-            remark:"",
-            id: ""
-          },
           format_type_list:["期限", "充值", "优惠券", "转账"],
           form_rules: {
             descripe: [
@@ -72,14 +63,16 @@
         }
       },
       props: {
-        dialog: Object
+        dialog: Object,
+        formData: Object
       },
       methods: {
         onSubmit(form) {
           this.$refs[form].validate(valid => {
             if (valid) {
+              const url = this.dialog.option == 'add' ? 'add' : `edit/${this.formData.id}`
               //console.log(this.formData);
-              this.$axios.post('/api/profile/add', qs.stringify(this.formData),
+              this.$axios.post(`/api/profile/${url}`, qs.stringify(this.formData),
                 {headers:{'Content-Type':'application/x-www-form-urlencoded'}})
                 .then(()=> {
                   this.$message({
