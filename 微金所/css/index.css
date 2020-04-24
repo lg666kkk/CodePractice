@@ -1,0 +1,66 @@
+.wjs_header {
+  height: 50px;
+  line-height: 50px;
+  border: 1px solid #ccc;
+}
+.wjs_header .row {
+  height: 100%;
+  text-align: center;
+}
+.wjs_header .row > div:nth-of-type(-n+3) {
+  border-right: 1px solid #cccccc;
+}
+.wjs_header .row a,
+.wjs_header .row span {
+  color: #0f0f0f;
+}
+.wjs_header .row .wjs_code {
+  position: relative;
+  display: block;
+}
+.wjs_header .row .wjs_code img {
+  display: none;
+  position: absolute;
+  top: 47px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 1px solid #cccccc;
+  border-top: none;
+}
+.wjs_header .row .wjs_code:hover > img {
+  display: block;
+}
+.wjs_nav .wjs_icon {
+  height: 80px;
+  line-height: 50px;
+  text-align: center;
+}
+.wjs_nav .wjs_icon > .wjs_font {
+  font-size: 40px;
+}
+.wjs_nav .wjs_icon > span:first-of-type {
+  color: red;
+}
+.wjs_nav .wjs_icon > span:last-of-type {
+  color: #0f0f0f;
+}
+.wjs_nav .wjs_navbar > li > a {
+  line-height: 50px;
+  font-size: 16px;
+}
+.wjs_nav .wjs_navbar > li > a:active,
+.wjs_nav .wjs_navbar > li > a:focus {
+  color: #777;
+  background-color: transparent;
+  border-bottom: 2px solid red;
+  box-sizing: border-box;
+}
+.wjs_nav .wjs_navbar .active > a,
+.wjs_nav .wjs_navbar .active a:hover,
+.wjs_nav .wjs_navbar .active a:focus {
+  background-color: transparent;
+  border-bottom: 2px solid red;
+}
+.wjs_nav .wjs_toggle {
+  margin-top: 12px;
+}

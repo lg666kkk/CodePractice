@@ -3,30 +3,16 @@
     <nav-bar class="home-nav">
       <div slot="center">购物街</div>
     </nav-bar>
-    <home-swiper :banners="banners"></home-swiper>
-    <recommond-view :recommond="recommond"></recommond-view>
-    <feature></feature>
-    <tab-control :titles="['流行', '新款', '精选']" class="tab-control" 
-    @tabClick="tabClick"
-    ></tab-control>
-    <good-list :goods="showGoods"></good-list>
-    <ul>
-      <li>111</li>
-      <li>111</li>
-      <li>111</li>
-      <li>111</li>
-      <li>111</li>
-      <li>111</li>
-      <li>111</li>
-      <li>111</li>
-      <li>111</li>
-      <li>111</li>
-      <li>111</li>
-      <li>111</li>
-      <li>111</li>
-      <li>111</li>
-      <li>111</li>
-    </ul>
+    <scroll class="content" ref="scroll">
+      <home-swiper :banners="banners"></home-swiper>
+      <recommond-view :recommond="recommond"></recommond-view>
+      <feature></feature>
+      <tab-control :titles="['流行', '新款', '精选']" class="tab-control" 
+      @tabClick="tabClick"
+      ></tab-control>
+      <good-list :goods="showGoods"></good-list>
+    </scroll>
+    <back-top @click.native="backClick"/>
   </div>
 </template>
 
@@ -39,6 +25,8 @@
   import TabControl from 'components/content/tabControl/TabControl';
   import GoodList from 'components/content/goods/GoodList'
   import {getDataMultidata, getHomeGoods} from 'network/home';
+  import Scroll from 'components/common/scroll/Scroll';
+  import BackTop from 'components/content/backtop/BackTop'
   export default {
       name:'Home',
       components: {
@@ -48,7 +36,9 @@
 
         NavBar,
         TabControl,
-        GoodList
+        GoodList,
+        Scroll,
+        BackTop
       },
       data() {
         return {
@@ -115,6 +105,10 @@
             this.goods[type].list.push(...res.data.list) 
             this.goods[type].page += 1
           })
+        },
+        backClick () {
+          //console.log('ddd');
+          this.$refs.scroll.scrollTo(0, 0, 500)
         }
       }   
   }
@@ -122,8 +116,8 @@
 
 <style scoped>
   #home {
-    padding-top: 44px;
-    padding-bottom: 400px;
+    height: 100vh;
+    position: relative;
   }
   .home-nav {
     background-color: var(--color-tint);
@@ -138,6 +132,15 @@
     /**粘性粘贴 */
     position: sticky;
     top: 44px;
-    z-index: 8;
+    z-index: 9;
+  }
+  .content {
+    /*height: calc(100% - 93px);
+    margin-top: 44px;*/
+    position: absolute;
+    top: 44px;
+    bottom: 49px;
+    right: 0;
+    left: 0;
   }
 </style>

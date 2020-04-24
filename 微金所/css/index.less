@@ -1,0 +1,74 @@
+//头部
+.wjs_header{
+  height:50px;
+  line-height: 50px;
+  border:1px solid #ccc;
+  .row{
+    height:100%;
+    text-align: center;
+    >div:nth-of-type(-n+3){
+      border-right: 1px solid #cccccc;
+    }
+    a,span{
+      color:#0f0f0f;
+    }
+    .wjs_code{
+      position:relative;
+      display: block;
+      img{
+        display: none;
+        position:absolute;
+        top:47px;
+        left:50%;
+        transform: translateX(-50%);
+        border:1px solid #cccccc;
+        border-top: none;
+      }
+      &:hover{
+        >img{
+          display: block;
+        }
+      }
+    }
+  }
+}
+//导航
+.wjs_nav{
+  .wjs_icon{
+    height:80px;
+    line-height: 50px;
+    text-align: center;
+    > .wjs_font{
+      font-size: 40px;
+    }
+    >span:first-of-type{
+      color:red;
+    }
+    >span:last-of-type{
+      color: #0f0f0f;
+    }
+  }
+  .wjs_navbar{
+    >li{
+          >a{
+                line-height: 50px;
+                font-size: 16px;
+                &:active,&:focus{
+                    color: #777;
+                    background-color: transparent;
+                    border-bottom: 2px solid red;
+                    box-sizing: border-box;
+                }
+            }
+    }
+          .active{
+            >a, a:hover,a:focus{
+              background-color: transparent;
+              border-bottom: 2px solid red;
+            }
+          }
+  }
+  .wjs_toggle{
+      margin-top: 12px;
+  }
+}
