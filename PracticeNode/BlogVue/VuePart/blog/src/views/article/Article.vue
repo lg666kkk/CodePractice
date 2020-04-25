@@ -10,10 +10,12 @@
           <span class="article_info_label">标签:
           <span v-if="item.labels.length === 0">未分类</span>
           <el-tag v-else size="mini" class="tag_margin" type="primary" v-for="(tag, key) in item.labels" :key="key">{{ tag }}</el-tag>
+          <span class="el-icon-view views"></span>
+          <span>{{ item.views }}</span>
           </span>
         </div>
         <div class="article_gist">{{ item.gist }}</div>
-        <div @click="articleDetail( item._id )" class="article_button article_all">阅读全文 ></div>
+        <div @click="articleDetail( item._id, item.views )" class="article_button article_all">阅读全文 ></div>
         <div class="article_underline"></div>
       </div>
     </div>
@@ -22,6 +24,7 @@
 
 <script>
   import { request } from 'network/request'
+  import qs from 'qs'
   import SideBar from '../common/SideBar'
   export default {
       name:'Article',
@@ -40,12 +43,27 @@
         })
         .then(res => {
           this.articleList = res.data.reverse()
-          //console.log(res);
+          console.log(res);
         })
       },
       methods: {
-        articleDetail(id) {
-          this.$router.push('/articleDetail/'+id)
+        articleDetail(id, views) {
+          let view = views+1
+          let data = {
+            id: id,
+            views: view
+          }
+          console.log(view);
+          data = qs.stringify(data)
+          request({
+            method: 'post',
+            url:'/api/admin/updateRead',
+            data,
+            headers:{'Content-Type':'application/x-www-form-urlencoded'}
+          })
+          .then((data) => {
+            this.$router.push('/articleDetail/'+id)
+          })
         }
       }
   }
@@ -58,5 +76,9 @@
     overflow: hidden;
     overflow-y: scroll;
     text-align: center;
+  }
+  .views {
+    margin-left: 5px;
+    margin-right: 4px;
   }
 </style>

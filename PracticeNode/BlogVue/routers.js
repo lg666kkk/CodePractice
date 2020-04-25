@@ -154,7 +154,7 @@ router.get('/api/tag', (req, res, next) => {
 /**
  * 文章保存
  */
-router.post('/api/admin/saveArticle', urlencodedParser, function (req, res, next) {
+router.post('/api/admin/saveArticle',passport.authenticate('jwt', {session:false}), urlencodedParser, function (req, res, next) {
   let info = req.body
   let labels = []
   for (let key in info) {
@@ -173,9 +173,30 @@ router.post('/api/admin/saveArticle', urlencodedParser, function (req, res, next
   })
 })
 /**
+ * 更新阅读量
+ */
+router.post('/api/admin/updateRead', urlencodedParser, function (req, res) {
+  let info = req.body
+  //console.log(info);
+  Article.find({_id: req.body.id}, function(err, data){
+    if (err) {
+      return next(err)
+    }
+    //console.log();
+    data[0].views = req.body.views
+    console.log(data[0].views);
+    Article(data[0]).save(function(err){
+      if (err) {
+        return next(err)
+      }
+      res.send()
+    })
+  })
+})
+/**
  * 文章更新
  */
-router.post('/api/admin/updateArticle', urlencodedParser, function (req, res, next) {
+router.post('/api/admin/updateArticle',passport.authenticate('jwt', {session:false}), urlencodedParser, function (req, res, next) {
   let info = req.body
   Article.find({_id: req.body.id}, function (err, data) {
     if (err) {
@@ -186,7 +207,7 @@ router.post('/api/admin/updateArticle', urlencodedParser, function (req, res, ne
     data[0].content = info.content
     data[0].gist = info.gist
     data[0].labels = info.labels
-    Db.Article(data[0]).save(function (err) {
+    Article(data[0]).save(function (err) {
       if (err) {
         return next(err)
       }
@@ -197,7 +218,7 @@ router.post('/api/admin/updateArticle', urlencodedParser, function (req, res, ne
 /**
  * 文章删除
  */
-router.post('/api/admin/deleteArticle', urlencodedParser, function (req, res, next) {
+router.post('/api/admin/deleteArticle',passport.authenticate('jwt', {session:false}), urlencodedParser, function (req, res, next) {
   Article.deleteOne({_id: req.body._id}, function (err) {
     if (err) {
       return next(err)

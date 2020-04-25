@@ -77,4 +77,15 @@ h2 {
 }
 .article_content pre {
   width: 90%;
+  /* color: white;
+  background-color: #444; */
+  font-size: 16px;
+  border-radius: 5px;
 }
+.article_content pre .hljs {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+

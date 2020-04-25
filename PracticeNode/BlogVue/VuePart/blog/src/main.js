@@ -27,6 +27,7 @@ const components = [Button, Input, Message, Select,Tag, Tooltip, Notification, M
 components.forEach((item) => {
   Vue.component(item.name, item)
 })
+// // 初始化行号插件
 
 //在main.js定义自定义指令 
 Vue.directive('highlight',function (el) {

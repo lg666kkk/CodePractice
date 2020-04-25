@@ -9,7 +9,7 @@ let ArticleSchema = new Schema({
   },
   date: {
     type: String,
-    required:true
+    default: Date.now
   },
   content: {
     type: String,
@@ -22,7 +22,18 @@ let ArticleSchema = new Schema({
   labels: {
     type: Array,
     required: true
-  } 
+  },
+  praises: {
+    type: Number,
+    default: 0
+  },
+  views: {
+    type: Number,
+    default: 0
+  },
+  commits: {
+    type: Array
+  }
 })
 
 module.exports = Articles = mongoose.model('Article', ArticleSchema)
