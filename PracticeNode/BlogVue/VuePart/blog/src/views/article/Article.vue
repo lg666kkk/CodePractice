@@ -43,7 +43,7 @@
         })
         .then(res => {
           this.articleList = res.data.reverse()
-          console.log(res);
+          //console.log(res);
         })
       },
       methods: {
@@ -53,7 +53,7 @@
             id: id,
             views: view
           }
-          console.log(view);
+          //console.log(view);
           data = qs.stringify(data)
           request({
             method: 'post',
