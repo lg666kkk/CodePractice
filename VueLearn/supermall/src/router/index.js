@@ -5,11 +5,13 @@ const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
-Vue.use(Router)
+
 const Home = () => import('views/home/Home.vue')
 const Cart = () => import('views/cart/Cart.vue')
-const Profile = () => import('../views/profile/Profile.vue')
-const Category = () => import('../views/category/Category.vue')
+const Profile = () => import('views/profile/Profile.vue')
+const Category = () => import('views/category/Category.vue')
+const Detail = () => import('views/detail/Detail')
+Vue.use(Router)
 
 const routers = [
   {
@@ -18,7 +20,7 @@ const routers = [
   },
   {
     path: '/home',
-    component: Home
+    component: Home,
   },
   {
     path: '/category',
@@ -31,6 +33,10 @@ const routers = [
   {
     path: '/cart',
     component:Cart
+  },
+  {
+    path: '/detail/:iid',
+    component: Detail
   }
 ]
 export default new Router({

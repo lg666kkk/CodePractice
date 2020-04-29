@@ -16,7 +16,9 @@
 export default {
   name: "TabBarItem",
   props: {
-    link:String,
+    link:{
+      type:String,
+    },
     activeColor: {
       type: String,
       default: 'red'

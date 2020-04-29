@@ -16,7 +16,7 @@
           <img slot="item-icon-active" src="~assets/img/tabbar/shopcart_active.svg" alt="">
           <div slot="item-text">购物车</div>
         </tab-bar-item>
-        <tab-bar-item link="profile" activeColor="red">
+        <tab-bar-item link="/profile" activeColor="red">
           <img slot="item-icon" src="~assets/img/tabbar/profile.svg" alt="">
           <img slot="item-icon-active" src="~assets/img/tabbar/profile_active.svg" alt="">
           <div slot="item-text">我的</div>
