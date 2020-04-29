@@ -26,7 +26,7 @@
 </template>
 
 <script>
-  import SideBar from 'views/common/SideBar';
+  import SideBar from 'components/common/SideBar';
   import { request } from 'network/request';
   import marked from 'marked';
   import _ from 'lodash';

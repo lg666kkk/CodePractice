@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import SideBar from '../common/SideBar'
+  import SideBar from 'components/common/SideBar'
   export default {
       name:'About',
       components: {

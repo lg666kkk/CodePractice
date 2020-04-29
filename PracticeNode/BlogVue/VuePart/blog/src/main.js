@@ -4,6 +4,8 @@ import App from './App.vue'
 import store from './store'
 // 导入ui样式
 import 'element-ui/lib/theme-chalk/index.css';
+import 'element-ui/lib/theme-chalk/display.css';
+
 import hight from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css';
 
@@ -18,11 +20,16 @@ import {
   Form,
   FormItem,
   Option,
-  Select
+  Select,
+  Row,
+  Col,
+  DropdownMenu,
+  Dropdown,
+  DropdownItem
 } from 'element-ui';
 // 导入vue-resource,与后端进行数据交互
 //import VueResource from 'vue-resource'
-const components = [Button, Input, Message, Select,Tag, Tooltip, Notification, MessageBox,Form, FormItem,Option]
+const components = [DropdownItem , Dropdown, Button, DropdownMenu, Input, Message, Select,Tag, Col, Row, Tooltip, Notification, MessageBox,Form, FormItem,Option]
 // 全局注册了所有组件
 components.forEach((item) => {
   Vue.component(item.name, item)

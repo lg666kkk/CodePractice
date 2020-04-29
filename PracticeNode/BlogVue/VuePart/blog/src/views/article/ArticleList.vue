@@ -25,7 +25,7 @@
 <script>
   import { request } from 'network/request'
   import qs from 'qs'
-  import SideBar from '../common/SideBar'
+  import SideBar from 'components/common/SideBar'
   export default {
       name:'ArticleList',
       components: {

@@ -1,12 +1,16 @@
 <template>
   <div class="index">
-    初始化页面
+    <head-view></head-view>
   </div>
 </template>
 
 <script>
+  import HeadView from 'components/Serve/HeadView'
   export default {
       name:'Index',
+      components: {
+        HeadView
+      }
   }
 </script>
 
