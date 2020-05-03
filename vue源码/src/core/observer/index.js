@@ -44,15 +44,15 @@ export class Observer {
     this.dep = new Dep()
     this.vmCount = 0
     def(value, '__ob__', this)
-    if (Array.isArray(value)) {
+    if (Array.isArray(value)) { // 数组
       if (hasProto) {
-        protoAugment(value, arrayMethods)
+        protoAugment(value, arrayMethods) // 改写数组原型方法
       } else {
-        copyAugment(value, arrayMethods, arrayKeys)
+        copyAugment(value, arrayMethods, arrayKeys) 
       }
-      this.observeArray(value)
+      this.observeArray(value) // 深度观察数组中的每一项
     } else {
-      this.walk(value)
+      this.walk(value) // 重新定义对象数据类型
     }
   }
 
@@ -64,7 +64,7 @@ export class Observer {
   walk (obj: Object) {
     const keys = Object.keys(obj)
     for (let i = 0; i < keys.length; i++) {
-      defineReactive(obj, keys[i])
+      defineReactive(obj, keys[i]) // 定义响应式
     }
   }
 
@@ -108,7 +108,7 @@ function copyAugment (target: Object, src: Object, keys: Array<string>) {
  * or the existing observer if the value already has one.
  */
 export function observe (value: any, asRootData: ?boolean): Observer | void {
-  if (!isObject(value) || value instanceof VNode) {
+  if (!isObject(value) || value instanceof VNode) {  // 不是对象不进行观测
     return
   }
   let ob: Observer | void
@@ -118,10 +118,10 @@ export function observe (value: any, asRootData: ?boolean): Observer | void {
     shouldObserve &&
     !isServerRendering() &&
     (Array.isArray(value) || isPlainObject(value)) &&
-    Object.isExtensible(value) &&
+    Object.isExtensible(value) && // 是否可扩展
     !value._isVue
   ) {
-    ob = new Observer(value)
+    ob = new Observer(value) // 观测对象类型
   }
   if (asRootData && ob) {
     ob.vmCount++
@@ -153,16 +153,16 @@ export function defineReactive (
     val = obj[key]
   }
 
-  let childOb = !shallow && observe(val)
+  let childOb = !shallow && observe(val) // 递归观测
   Object.defineProperty(obj, key, {
     enumerable: true,
     configurable: true,
-    get: function reactiveGetter () {
+    get: function reactiveGetter () { // 数据的取值
       const value = getter ? getter.call(obj) : val
       if (Dep.target) {
-        dep.depend()
+        dep.depend() // 手机依赖watcher
         if (childOb) {
-          childOb.dep.depend()
+          childOb.dep.depend() // 收集依赖
           if (Array.isArray(value)) {
             dependArray(value)
           }
