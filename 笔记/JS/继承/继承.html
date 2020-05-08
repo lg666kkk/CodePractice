@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+    <script type='text/javascript'>
+      /**
+       * 封装：低耦合高内聚，可复用性强
+       * 多态：重载和重写
+       *    1. 重载：方法名相同，形参个数或者类型不一样 => Js中不存在真正意义上的重载
+       *            JS中的重载指的是同一个方法，更具传参不同，实现出不同的效果
+       *    2. 重写：
+      */
+    // function A (x) {
+    //   this.x = x
+    // }
+    // A.prototype.getX = function () {
+    //   console.log(this.x);
+    // }
+    
+    // function B (y) {
+    //   A.call(this, 200) // b1.x = 200
+    //   this.y = y
+    // }
+    // // Object.create(obj) => 创建一个空对象，让空对象的__proto__指向obj
+    // B.prototype = Object.create(A.prototype)
+    // B.prototype.constructor = B;
+    // B.prototype.getY = function () {
+    //   console.log(this.y);
+    // }
+    // let b1 = new B()
+    // console.log(b1.x);
+    </script>
+    <script type='text/javascript'>
+        // ES6中的继承
+        class A {
+          constructor (x) {
+            this.x = x
+          }
+          getX () {
+            console.log(this.x);
+          }
+        }
+        // => B.prototype.__proto__ = A.prototy
+        class B extends A {
+          constructor (y) {
+            super(200) // super() => A.call(this)
+            this.y
+          }
+          getY () {
+            console.log(this.y);
+          }
+        }
+        let b1 = new B(100)
+        console.log(b1);
+    </script>
+</body>
+</html>

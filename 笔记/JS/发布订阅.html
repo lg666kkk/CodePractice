@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- 
+    DOM0和DOM2：
+      1. 语法上区别：
+        DOM0 => box.onclick = function(){}
+        DOM2 => box.addEventListener('click', function(){})
+      2. 底层运行机制上的区别：
+        DOM0就是给元素的某个属性绑定方法(有效绑定的方法只有一个)
+        DOM2是基于事件池机制完成的，每增加一个绑定的方法，都会往事件池当中存放一个，
+          当事件触发，会依次执行事件池中的事件(可以给同一元素的某个事件绑定多个不同的方法) => 事件订阅其实就是模拟事件池机制
+      3. DOM2中可以给一些特殊的事件类型绑定方法，这些事件类型DOM0不支持绑定，例如DOMContentLoaded(DOM结构加载完成就会触发)
+          transitionend等
+
+          $(document).ready() => $(function(){}) 与 window.onload区别
+              1) window.onload是DOM0级事件绑定，在同一个页面当中，只能绑一个方法(页面所有资源加载完会触发)
+              2) $(document).ready() => $(function(){})基于DOM2事件绑定，DOM结构加载完会触发
+    DOM2的事件池机制：
+      1. 基于addEventListener/attachEvent(IE6~8)像事件池中追加方法:新版本浏览器会根据元素和事件类型对新增的方法做重复校验，但IE6~8不可以
+      2. 当事件触发，会把事件池中的方法按照增加的顺序依次执行，但是IE6~8中执行的顺序是不固定的
+      3. ...
+  -->
+</head>
+<body>
+  <button class="submit">点我啊~~</button>
+  <!-- <script type='text/javascript' src='./node_modules/jquery/dist/jquery.min.js'></script>
+  <script type='text/javascript'>
+    // // 创建一个事件池 => $.Callbacks()
+    // let $pond = $.Callbacks()
+    // $('.submit').click(function () {
+    //   // 点击的时候通知事件池中的方法,还可以给每个方法传递实参
+    //   $pond.fire(100, 200)
+    // })
+    // // 把需要做的事情陆续添加到事件池中 => $pond.add(func)
+    // $pond.add(fn1)
+    // $pond.add(fn1) // jq中没有做去重
+    // $pond.add(fn2)
+    // $pond.add(fn3)
+
+    // function fn1 () {
+    //   console.log(1);
+    // }
+    // function fn2 () {
+    //   console.log(2);
+    // }
+    // function fn3 () {
+    //   console.log(3);
+    // }
+    // function fn4 () {
+    //   console.log(4);
+    // }
+    // $pond.add(fn4)
+  </script> -->
+  <script type='text/javascript' src='./subscrib.js'></script>
+  <script type='text/javascript'>
+    let pond = _Subscribe()
+    document.querySelector('.submit').onclick = function (ev) {
+      pond.fire(ev)
+    }
+    function fn1 () {
+      console.log(1);
+    }
+    function fn2 () {
+      console.log(2);
+    }
+    pond.add(fn1)
+    pond.add(fn2)
+    pond.add(fn3)
+
+    function fn3 () {
+      console.log(3);
+    }
+    function fn4 () {
+      console.log(4);
+    }
+    pond.add(fn4)
+  </script>
+</body>
+</html>
