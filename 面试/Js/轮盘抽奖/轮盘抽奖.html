@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>轮盘抽奖</title>
+  <style type='text/css'>
+    .wrap {
+      width: 650px;
+      height: 600px;
+      background-image: url('./img/bc.jpg');
+      margin: 0 auto;
+      position: relative;
+    }
+    img[alt^='pointer'] {
+      position: absolute;
+      top: 48%;
+      left: 52%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+    }
+    img[alt='bc'] {
+      position: absolute;
+      top: 57px;
+      left: 119px;
+      z-index: 5;
+    }
+    @keyframes move {
+      from {
+        transform: rotate(0deg);
+      }
+      to{
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div>
+      <img src="./img/bc-bc.png" alt="bc" style="transform: rotate(25deg);">
+    </div>
+    <div>
+      <img src="./img/pointer.png" alt="pointer">
+    </div>
+  </div>
+  <script type='text/javascript'>
+    let bc = document.getElementsByTagName('img')[0]
+    let pointer = document.getElementsByTagName('img')[1]
+    function throttle (fun, wait) {
+      let bool = true
+      return function () {
+        if (bool) {
+          bool = false
+          fun()
+          setTimeout(() => {
+            bool = true
+          }, wait)
+        }
+      }
+    }
+    function start () {
+      let deg = Math.floor(360 / 7)
+      let r = Math.floor(Math.random() * 7)
+      //console.log(r);
+      let res = deg * r
+      console.log(res);
+      // let res1 = res + (360 * 10) + 25
+      let end = res + 360 + 25
+      //console.log('res1', res1);
+      bc.style.animationName = 'move'
+      
+      bc.style.animationDuration = '1s'
+      bc.style.transform = 'rotate('+ end +'deg)'
+      bc.style.translate = 'ease-out 1s'
+      switch(r) {
+        case 0:
+          {
+            console.log("免单4999");
+            // setTimeout(() => {
+            //   //alert("免单4999")
+            //   bc.style = ''
+            //   bc.style.transform = 'rotate('+ 25 +'deg)'
+            // }, 1000)
+            break
+          }
+        case 1:
+          {
+            console.log('免单50元');
+            // setTimeout(() => {
+            //   //alert('未中奖')
+            //   bc.style = ''
+            //   bc.style.transform = 'rotate('+ 25 +'deg)'
+            // }, 1000)
+            break
+          }
+        case 2:
+          {
+            console.log('免单10元');
+            // setTimeout(() => {
+            //   //alert('提高白条额度')
+            //   bc.style = ''
+            //   bc.style.transform = 'rotate('+ 25 +'deg)'
+            // }, 1000)
+            break
+          }
+        case 3:
+          {
+            console.log('免单5元');
+            // setTimeout(() => {
+            //   //alert('免分期服务费')
+            //   bc.style = ''
+            //   bc.style.transform = 'rotate('+ 25 +'deg)'
+            // }, 1000)
+            break
+          }
+        case 4:
+          {
+            console.log('免分期服务费');
+            // setTimeout(() => {
+            //   //alert('免单5元')
+            //   bc.style = ''
+            //   bc.style.transform = 'rotate('+ 25 +'deg)'
+            // }, 1000)
+            break
+          }
+        case 5:
+          {
+            console.log('提高白条额度');
+            // setTimeout(() => {
+            //   //alert('免单10元')
+            //   bc.style = ''
+            //   bc.style.transform = 'rotate('+ 25 +'deg)'
+            // }, 1000)
+            break
+          }
+        case 6:
+          {
+            console.log('未中奖');
+            // setTimeout(() => {
+            //   // alert('免单50元')
+            //   bc.style = ''
+            //   bc.style.transform = 'rotate('+ 25 +'deg)'
+            // }, 1000)
+            break
+          }
+      }
+    }
+    pointer.addEventListener('click', throttle(start, 1000))
+  </script>
+</body>
+</html>

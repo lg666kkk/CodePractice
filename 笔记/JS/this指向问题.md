@@ -1,0 +1,284 @@
+# this指向问题
+
+## this的绑定规则
+
+### 默认绑定
+
+==**this默认指向window**==
+
+```javascript
+// 1. 全局环境下的this指向window
+console.log(this); // window
+// 2. 函数独立调用时，函数内部的this也指向window
+function fn() {
+    console.log(this);
+}
+fn(); // window
+// 3.被嵌套的函数独立调用时，this默认指向window
+let a = 1;
+let obj = {
+    a: 2,
+    foo: function () {
+        // 函数当做对象的方法来调用，this指向obj
+        let self = this;
+        function test() {
+            console.log(self.a); // 2
+            console.log(this); //window
+        }
+        test();
+    },
+};
+obj.foo();
+// 4.IIFE 自执行函数
+var b = 10;
+function foo1() {
+    console.log(this); // obj1
+    // (function test () {
+    //   console.log(this); // window
+    //   console.log(this.b); // 10
+    // })();
+    (function test (self) {
+        console.log(self.b); // 20
+    })(this);
+}
+var obj1 = {
+    b: 20,
+    foo1: foo1
+};
+obj1.foo1();
+
+(function () {
+    console.log(this); // window
+})();
+// 5. 闭包中的this默认指向window
+var obj2 = {
+    c:40,
+    foo2: function () {
+        var d = this.c
+        return function test () {
+            console.log('闭包中的this:' + this); // window
+            return d
+        }
+    }
+}
+var f = obj2.foo2()
+console.log(f()); // 40
+```
+
+### 隐式绑定
+
+```javascript
+function foo () {
+    console.log(this.a); 
+}
+let obj = {
+    a: 1,
+    foo: foo,
+    obj1: {
+        a:2,
+        foo: foo
+    }
+}
+// foo()函数的直接对象(.前面的)是obj,this指向了这个直接对象
+obj.foo() // 1
+// foo()函数的直接对象(.前面的)是obj1,this指向了这个直接对象
+obj.obj1.foo() // 2
+```
+
+### 隐式丢失
+
+```javascript
+// 隐式丢失:指被隐式绑定的函数丢失了绑定对象 从而默认绑定到了window
+// 1. 函数别名导致隐式丢失
+function foo () {
+    console.log(this.a);
+}
+var a = 0
+let obj = {
+    a: 1,
+    foo
+}
+/**
+       * 把obj.foo赋值给别名bar,造成隐式丢失情况，bar与obj毫无关系
+      */
+var bar = obj.foo
+bar() // 0
+// 以上代码等价于
+// var bar = function foo () {....}
+
+// 2. 参数传递
+var b = 11
+function foo1 () {
+    console.log(this.b);
+}
+function bar1 (fn) {
+    fn()
+}
+var obj1 = {
+    b: 12,
+    foo1:foo1
+}
+// 把obj1.foo1当做参数传递到bar1函数中，有隐式的函数赋值(fn=obj1.foo1)，即会出现函数丢失的情况
+bar1(obj1.foo1) // 11
+/**
+       * 以上代码相当于：
+          var b = 11
+          function bar1 (fn) {
+            fn()
+          }
+          bar1(function foo1(){
+            // this指向window
+            console.log(this.a);
+          })
+      */
+
+// 3.内置函数, setTimeout()/setInterval()中的第一个参数的回调函数中的this默认指向了window
+// setTimeout(function(){
+//   console.log(this); // window
+// }, 1000);
+var c = 22
+function foo3 () {
+    console.log(this.c); // 22
+}
+var obj3 = {
+    c: 33,
+    foo3: foo3
+}
+setTimeout(obj3.foo3, 1000)
+
+// 4.间接调用
+function foo4 () {
+    console.log(this.dd);
+}
+var dd = 33
+var obj4 = {
+    dd: 44,
+    foo4: foo4
+}
+var p = {dd: 55}
+obj4.foo4() // 44
+// 将obj4.foo4函数对象赋值给了p.foo5函数，然后立即执行，相当于仅仅是foo4函数的立即调用，this指向window
+!(p.foo5 = obj4.foo4)() // 33
+// 将obj.foo4赋值给了p.foo6函数, p.foo()函数再执行，其实是属于p对象的方法执行，this指向当前p对象
+p.foo6 = obj4.foo4
+p.foo6() // 55
+
+// 5. 其他情况 -- this指向window
+var ee = 88
+var obj5 = {
+    ee: 77,
+    foo8: foo8
+}
+function foo8 () {
+    console.log(this.ee);
+}
+!(obj5.foo8 = obj5.foo8)() // 88 -- this指向window
+!(false || obj5.foo8)() // 88 -- this指向window
+!(1, obj5.foo8)() // 88 -- this指向window
+```
+
+### 显示绑定
+
+```javascript
+// 显示绑定：使用bind(), apply(), call()把对象绑定到this上
+
+// 硬绑定：是显示绑定的一种变形，使得this不能再被改变
+var a = 0
+function foo () {
+    console.log(this.a);
+}
+var obj = {
+    a: 2
+}
+var bar = function () {
+    foo.call(obj)
+}
+bar() // 2
+setTimeout(bar, 1000) // 2 
+bar.call(window) // 2
+
+// 数组的forEach(fn, 对象)/map() /filter() /some() /every() -- 具有显示绑定this,能改变当前回调函数中this指向
+
+var id = 'window'
+function fn (el) {
+    console.log(el, this.id);
+}
+var obj1 = {
+    id: 'fn'
+}
+~[1,2,3].forEach(fn) // 1 'window', 2 'window', 3 'window'
+~[1,2,3].forEach(fn, obj1) // 1 'fn', 2 'fn', 3 'fn'
+```
+
+### new 绑定
+
+```javascript
+// new 绑定
+function fn () {
+    // 如果是new 关键字来执行函数，相当于构造函数来是实例化对象，那么内部的this指向了当前实例化的对象
+    console.log(this); // this指向fn(){}
+}
+let fn1 = new fn()
+console.log(fn1); // this指向fn(){}
+
+function fn2 () {
+    console.log(this); // this指向fn2(){}，即this指向当前的实例对象
+    // 使用return关键字返回对象时，实例化后的对象的this指向return返回的对象
+    return {
+        name: 'lg'
+    }
+}
+let f = new fn2()
+console.log(f); // f的this指向{name: 'lg'}
+
+var person =  {
+    fav: function () {
+        return this
+    }
+}
+console.log(person.fav()); // this指向person对象
+var p = new person.fav() 
+console.log(p, p===person); // p指向fav, false
+```
+
+### 严格模式下的this指向
+
+```javascript
+// 严格模式下this的指向
+// 1. 独立调用的函数内部的this指向了undefined
+function fn () {
+    'use strict'
+    console.log(this); // undefined
+}
+fn()
+// 2. 在严格模式下，函数apply()和call()内部的this始终是它们的第一个参数
+var color = 'blue'
+function f () {
+    'use strict'
+    console.log(this); // null
+    console.log(this.color);
+}
+f.call(null) // 报错，在严格模式下，call中传入什么，this就是什么
+```
+
+### 总结
+
+```markdown
+1. 默认绑定
+2. 隐式绑定
+3. 显示绑定
+4. new绑定
+这四种绑定分别对应函数的四种调用：
+- 独立调用
+- 方法的调用
+- 间接调用
+   call(), bind(), apply()
+- 构造函数调用
+
+隐式丢失
+  - 函数别名
+  - 函数做参数传递
+  - 内置函数
+  - 间接调用
+```
+
