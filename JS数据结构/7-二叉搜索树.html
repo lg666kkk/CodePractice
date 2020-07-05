@@ -89,6 +89,24 @@
           handler(node.key)
         }
       }
+      // 层序遍历
+      BinarySearchTree.prototype.levelOrderTraversal = function (handler) {
+        this.levelOrderTraversalNode(this.root, handler)
+      }
+      BinarySearchTree.prototype.levelOrderTraversalNode = function (node, handler) {
+        let queue = [] // 使用数组模拟队列
+        queue.push(node) 
+        while (queue.length) {
+          node = queue.shift() 
+          handler(node.key)
+          if (node.left != null) {
+            queue.push(node.left)
+          }
+          if (node.right != null) {
+            queue.push(node.right)
+          }
+        }
+      }
       // 获取最小值
       BinarySearchTree.prototype.min = function () {
          // 获取根节点
@@ -249,14 +267,20 @@
     bst.insert(18)
     bst.insert(25)
     bst.insert(6)
+    // bst.insert(1)
+    // bst.insert(2)
+    // bst.insert(3)
+    // bst.insert(4)
+    // bst.insert(5)
+    // bst.insert(6)
     console.log(bst);
 
-    // 先序遍历
-    // let resultStr = ""
-    // bst.preOrderTraversal(function (key) {
-    //   resultStr += key + " "
-    // })
-    // console.log(resultStr);
+    //先序遍历
+    let resultStr1 = ""
+    bst.preOrderTraversal(function (key) {
+      resultStr1 += key + " "
+    })
+    console.log(resultStr1);
 
     // 中序遍历
     // let resultStr = ""
@@ -272,18 +296,25 @@
     // })
     // console.log(resultStr);
 
-    let max = bst.max()
-    let min = bst.min()
-    console.log(min, max);
-    console.log(bst.search(6));
-    bst.remove(9)
-    bst.remove(7)
-    bst.remove(15)
+    //层序遍历
     let resultStr = ""
-    bst.postOrderTraversal(function (key) {
+    bst.levelOrderTraversal(function (key) {
       resultStr += key + " "
     })
     console.log(resultStr);
+
+    // let max = bst.max()
+    // let min = bst.min()
+    // console.log(min, max);
+    // console.log(bst.search(6));
+    // bst.remove(9)
+    // bst.remove(7)
+    // bst.remove(15)
+    // let resultStr = ""
+    // bst.postOrderTraversal(function (key) {
+    //   resultStr += key + " "
+    // })
+    // console.log(resultStr);
   </script>
 </body>
 </html>
