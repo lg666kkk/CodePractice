@@ -149,7 +149,7 @@
           stack.push(node);
           while (stack.length !== 0) {
             node = stack.pop();
-            result.unshift(node.val);
+            result.unshift(node.key);
             if (node.left !== null) {
               stack.push(node.left);
             }
