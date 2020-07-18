@@ -1,5 +1,5 @@
 let dbmodel = require('../model/dbmodule')
-let User = dbmodel.model('User')
+let User = dbmodel.User
 
 exports.findUser = function (res) {
   User.find(function (err, user) {

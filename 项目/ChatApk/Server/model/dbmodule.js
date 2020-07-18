@@ -2,7 +2,7 @@ let mongoose = require("mongoose")
 let db = require("../config/db")
 let Schema = mongoose.Schema
 // 用户表
-let User = new Schema({
+let UserSchema = new Schema({
   name: {
     type:String // 用户名
   },
@@ -37,7 +37,7 @@ let User = new Schema({
   * @ author lg
   * 好友表
   */
-let Friends = new Schema({
+let FriendsSchema = new Schema({
   UserId: { // 用户ID
     type:Schema.Types.ObjectId, 
     ref: 'User'
@@ -57,7 +57,7 @@ let Friends = new Schema({
   * @ author lg
   * 一对一消息表
   */
-let Message = new Schema({
+let MessageSchema = new Schema({
   UserId: { // 用户ID
     type:Schema.Types.ObjectId, 
     ref: 'User'
@@ -83,7 +83,7 @@ let Message = new Schema({
   * @ author lg
   * 群表
   */
-let Group = new Schema({
+let GroupSchema = new Schema({
   UserId: { // 群主ID
     type:Schema.Types.ObjectId, 
     ref: 'User'
@@ -109,7 +109,7 @@ let Group = new Schema({
   * @ author lg
   * 群成员表
   */
-let GroupUser = new Schema({
+let GroupUserSchema = new Schema({
   GroupId: { // 群ID
     type:Schema.Types.ObjectId, 
     ref: 'Group'
@@ -136,7 +136,7 @@ let GroupUser = new Schema({
   * @ author lg
   * 群消息表
   */
-let GroupMessage = new Schema({
+let GroupMessageSchema = new Schema({
   GroupId: { // 群ID
     type:Schema.Types.ObjectId, 
     ref: 'Group'
@@ -155,9 +155,19 @@ let GroupMessage = new Schema({
     type:Date 
   }
 })
-module.exports = db.model('User', User)
-module.exports = db.model('Friends', Friends)
-module.exports = db.model('Group', Group)
-module.exports = db.model('GroupUser', GroupUser)
-module.exports = db.model('GroupMessage', GroupMessage)
-module.exports = db.model('Message', Message)
+
+const User  = db.model('User', UserSchema)
+const Friends = db.model('Friends', FriendsSchema)
+const Group = db.model('Group', GroupSchema)
+const GroupUser = db.model('GroupUser', GroupUserSchema)
+const GroupMessage = db.model('GroupMessage', GroupMessageSchema)
+const Message = db.model('Message', MessageSchema)
+
+module.exports = {
+  User,
+  Friends,
+  Group,
+  GroupUser,
+  GroupMessage,
+  Message
+}
