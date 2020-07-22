@@ -1,11 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>图结构</title>
+  </head>
+  <body>
+    <script type="text/javascript" src="./JS/队列.js"></script>
+    <script type='text/javascript' src='./JS/字典.js'></script>
+    <script type="text/javascript">
+      // 邻接表表示法
+      function Grap() {
+        // 属性: 顶点(数组)/边(字典)
+        this.vertexes = []; // 顶点
+        this.edges = new Dictionay(); // 边
+        // 方法
+        // 添加顶点
+        Grap.prototype.addVertexe = function (v) {
+          this.vertexes.push(v);
+          this.edges.set(v, []);
+        };
+        // 添加边(传两个顶点作为参数)
+        Grap.prototype.addEdge = function (v1, v2) {
+          // 无向图
+          this.edges.get(v1).push(v2);
+          this.edges.get(v2).push(v1);
+        };
+        // toString方法
+        Grap.prototype.toString = function () {
+          let str = "";
+
+          for (let i = 0; i < this.vertexes.length; i++) {
+            str += this.vertexes[i] + "->";
+            let vEdges = this.edges.get(this.vertexes[i]);
+            for (let j = 0; j < vEdges.length; j++) {
+              str += vEdges[j] + " ";
+            }
+            str += "\n";
+          }
+          return str;
+        }
+        /**
+         * 为了记录顶点是否被访问过，我们使用三种颜色表示它们的状态:
+         *  - 白色: 表示该顶点还没有被访问
+         *  - 灰色: 表示该顶点被访问过,但没有被探索
+         *  - 黑色: 表示该顶点被访问过且被完全探索过
+        */
+        Grap.prototype.initialColor = function () {
+          let colors = []
+          for (let i=0; i<this.vertexes.length; i++) {
+            colors[this.vertexes[i]] = 'white' // 默认为白色
+          }
+          return colors
+        }
+        // BFS => 使用队列，类似于树的层序遍历
+        Grap.prototype.bfs = function (fistV, handler) {
+          // 初始化颜色
+          let colors = this.initialColor()
+          // 创建队列
+          let queue = new Queue()
+          queue.enqueue(fistV)
+          // 循环从队列中取出元素
+          while (!queue.isEmpty()) {
+            // 从队列中取出一个顶点
+            let v = queue.dequeue()
+            // 获取和顶点相连的其他顶点
+            let vList = this.edges.get(v)
+            // 将v的颜色设置成灰色
+            colors[v] = 'gray'
+            // 遍历所有的顶点加入到队列中
+            for (let i=0; i<vList.length; i++) {
+              let a = vList[i]
+              if (colors[a] === 'white') {
+                colors[a] = 'gray'
+                queue.enqueue(a)
+              }
+            }
+            // v顶点已经被探测,访问顶点
+            handler(v)
+            // 将顶点设置为黑色
+            colors[v] = 'black'
+          }
+        }
+        // DFS => 深度优先搜寻
+        Grap.prototype.dfs = function (firstV, handler) {
+          // 初始化颜色
+          let colors = this.initialColor()
+          // 从某个顶点开始递归访问
+          this.dfsVist(firstV, colors, handler)
+        }
+        Grap.prototype.dfsVist = function (v, colors, handler) {
+          // 将颜色设置为灰色
+          colors[v] = 'gray'
+          // 处理v
+          handler(v)
+          // 访问与v相连的顶点
+          let vList = this.edges.get(v)
+          for (let i=0; i<vList.length; i++) {
+            let e = vList[i]
+            if (colors[e] === 'white') {
+              this.dfsVist(e, colors, handler)
+            }
+          }
+          // 将v设置成黑色
+          colors[v] = 'black'
+        }
+      }
+      let G = new Grap();
+      let myV = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
+      for (let i = 0; i < myV.length; i++) {
+        G.addVertexe(myV[i]);
+      }
+      G.addEdge("A", "B");
+      G.addEdge("A", "C");
+      G.addEdge("A", "D");
+      G.addEdge("C", "D");
+      G.addEdge("C", "G");
+      G.addEdge("D", "G");
+      G.addEdge("D", "H");
+      G.addEdge("B", "E");
+      G.addEdge("B", "F");
+      G.addEdge("E", "I");
+      console.log(G);
+      let f = G.toString();
+      console.log(f);
+      /*
+        A->B C D 
+        B->A E F 
+        C->A D G 
+        D->A C G H 
+        E->B I 
+        F->B 
+        G->C D 
+        H->D 
+        I->E 
+      */
+      let str = ''
+      G.bfs(G.vertexes[0], function (val) {
+        str += val + " "
+      })
+      console.log(str);
+
+      let str1 = ''
+      G.dfs(G.vertexes[0], function (val) {
+        str1 += val + " "
+      })
+      console.log(str1);
+    </script>
+  </body>
 </html>

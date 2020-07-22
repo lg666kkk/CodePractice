@@ -30,7 +30,8 @@ let UserSchema = new Schema({
     default: 'user.png'
   },
   registerDate: {
-    type:Date // 注册时间
+    type:Date, // 注册时间
+    default: new Date()
   }
 })
   /**
@@ -50,7 +51,8 @@ let FriendsSchema = new Schema({
     type:String 
   },
   Time: { // 生成时间
-    type:Date 
+    type:Date,
+    default: new Date()
   }
 })
   /**
