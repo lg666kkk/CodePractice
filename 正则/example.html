@@ -7,11 +7,29 @@
   </head>
   <body>
     <script type="text/javascript">
-      let reg = /^(\d{6})(\d{4})(\d{2})(\d{2})\d{2}(\d)(\d|X)$/
-      console.log(reg.exec("620422199903110216")); // true
-      console.log(reg.test("")); // false
-      console.log(reg.test("")); // true
-      
+      let str = "zhufeng2019yangfan2020qihang2021"
+      let reg = /\d+/g
+      // 要求编写一个方法execAll,执行一次可以把所有的匹配结果捕获到
+      ~function () {
+        function execAll (str = "") {
+          // 验证当前正则是否有修饰符g(不加g可能会导致死循环)
+          if (!this.global) {
+            return this.exec(str)
+          }
+          // => str表示要匹配的字符串
+          // => this: RegExp的实例(当前操作的正则)
+          let result = [],
+              res = this.exec(str)
+          while (res) { // 只要捕获的内容不为null，继续捕获
+            result.push(res[0])
+            res = this.exec(str)
+          }
+          return result
+        }
+        RegExp.prototype.execAll = execAll
+      }()
+      console.log(reg.execAll(str));
+      console.log(str.match(reg));
     </script>
   </body>
 </html>
