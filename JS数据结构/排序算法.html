@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>排序算法</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      // 创建列表类
+      function ArrayList() {
+        // 属性
+        this.array = [];
+        // 方法
+        // 将数据插入到数组中
+        ArrayList.prototype.insert = function (item) {
+          this.array.push(item);
+        };
+        ArrayList.prototype.toString = function () {
+          return this.array.join("-");
+        };
+        // 交换两个数据
+        ArrayList.prototype.swap = function (x, y) {
+          let temp = this.array[x];
+          this.array[x] = this.array[y];
+          this.array[y] = temp;
+        };
+        // 冒泡排序
+        ArrayList.prototype.bubbleSort = function () {
+          let len = this.array.length;
+          for (let j = len - 1; j >= 0; j--) {
+            for (let i = 0; i < j; i++) {
+              // 最后一次比较len-2与len-1的值
+              if (this.array[i] > this.array[i + 1]) {
+                this.swap(i, i + 1);
+              }
+            }
+          }
+        };
+        // 选择排序
+        // 希尔排序
+        // 插入排序
+        // 快速排序
+      }
+      let list = new ArrayList();
+      list.insert(2);
+      list.insert(12);
+      list.insert(23);
+      list.insert(27);
+      list.insert(111);
+      list.insert(62);
+      list.insert(82);
+      console.log(list.toString());
+      list.bubbleSort();
+      console.log(list.toString());
+    </script>
+  </body>
+</html>

@@ -53,6 +53,9 @@ let FriendsSchema = new Schema({
   Time: { // 生成时间
     type:Date,
     default: new Date()
+  },
+  markName: {
+    type:String
   }
 })
   /**

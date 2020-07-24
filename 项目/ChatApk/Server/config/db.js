@@ -1,6 +1,6 @@
 let mongoose = require("mongoose")
 // 数据库连接
-mongoose.connect("mongodb://localhost/chatSystem",{ useNewUrlParser: true,  useUnifiedTopology: true });
+mongoose.connect("mongodb://localhost/chatSystem",{ useNewUrlParser: true,  useUnifiedTopology: true , useFindAndModify:true});
 let db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));

@@ -12,6 +12,13 @@ exports.generateToken = function (id) {
 }
 // 解码
 exports.verifyToken = function (e) {
-  let payload = jwt.verify(e, secret)
+  let payload
+  jwt.verify(e, secret, function (err, result) {
+    if (err) {
+      payload = 0
+    } else {
+      payload = 1
+    }
+  })
   return payload
 }

@@ -13,6 +13,6 @@ exports.testToken = function (req, res) {
   let jq = jwt.verifyToken(token)
   res.send({
     stateCode:200,
-    jq
+    message:'token正确'
   })
 }

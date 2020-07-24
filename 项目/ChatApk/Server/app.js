@@ -1,19 +1,47 @@
 const express = require('express')
-// 导入路由
-const router = require("./router")
+const bodyParser = require('body-parser')
+const jwt = require('./dao/jwt')
 // 导入跨域模块
 const cors = require("cors")
 const app = express()
 
+// 配置中间件
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
+
 // 跨域
 app.use(cors())
 
+
+// token判断 -- 如果前端携带token进行判断
+app.use(function (req, res, next) {
+  //console.log("sssss",req.body);
+  if (typeof (req.body.token) !== 'undefined') {
+    // 处理token匹配
+    let token = req.body.token
+    //console.log(token);
+    let tokenMatch = jwt.verifyToken(token) // 0或1
+    if (tokenMatch === 1) {
+      // 通过验证
+      next()
+    } else {
+      return res.send({
+        statusCode: 300,
+        message: "token验证失败"
+      })
+    }
+  } else {
+    next()
+  }
+})
+
+// 导入路由
+const router = require("./router/index")
 // 挂在路由
 app.use(router)
 
-
 // 404错误
-app.use((res, req, next) => {
+app.use((req, res, next) => {
   let err = new Error("Not found Page")
   err.status = 404
   next(err)
@@ -21,7 +49,9 @@ app.use((res, req, next) => {
 
 // 服务器错误
 app.use(function (err, req, res, next) {
-  return res.status(500).send()
+  res.send({
+    statusCode:500
+  })
 })
 app.listen(3000, ()=>{
   console.log("serer is ...");
