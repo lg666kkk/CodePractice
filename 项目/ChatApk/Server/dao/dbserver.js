@@ -252,6 +252,21 @@ exports.userDetail = function (id, res) {
   })
 }
 // 用户修改
+function UpdateInformation (data, update, res) {
+  User.findByIdAndUpdate(data, update, function (err, resu) {
+    if (err) {
+      return res.send({
+        statusCode:500
+      })
+    } else {
+      // 修改成功
+      return res.send({
+        statusCode: 200,
+        message:"修改成功"
+      })
+    }
+  })
+}
 /*
   修改密码: 新密码/用户id/原密码
 */
@@ -280,22 +295,28 @@ exports.userUpdate = function (data, res) {
               if (data.type == "password") {
                 let password = brcypt.encrpty(data.data)
                 update[data.type] = password
+                UpdateInformation(data.id, update, res)
               } else {
+                // 邮箱匹配
                 update[data.type] = data.data
+                User.countDocuments(update, function (err, result) {
+                  if (err) {
+                    res.send({
+                      statusCode: 500
+                    })
+                  } else {
+                    // 没有匹配到相同邮箱
+                    if (result == 0) {
+                      UpdateInformation(data.id, update, res)
+                    } else {
+                      return res.send({
+                        statusCode:300,
+                        message: "邮箱已存在"
+                      })
+                    }
+                  }
+                })
               }
-              User.findByIdAndUpdate(data.id, update, function (err, resu) {
-                if (err) {
-                  return res.send({
-                    statusCode:500
-                  })
-                } else {
-                  // 修改成功
-                  return res.send({
-                    statusCode: 200,
-                    message:"修改成功"
-                  })
-                }
-              })
             } else {
               // 密码匹配失败
               return res.send({
@@ -307,21 +328,30 @@ exports.userUpdate = function (data, res) {
         }
       }
     )
-  } else {
+  } else if (data.type === 'name') {
+      // 用户名匹配
+      update[data.type] = data.data
+      User.countDocuments(update, function (err, result) {
+        if (err) {
+          res.send({
+            statusCode: 500
+          })
+        } else {
+          // 没有匹配到相同邮箱
+          if (result == 0) {
+            UpdateInformation(data.id, update, res)
+          } else {
+            return res.send({
+              statusCode:300,
+              message: "用户名已存在"
+            })
+          }
+        }
+      })
+  }
+  else {
     update[data.type] = data.data
-    User.findByIdAndUpdate(data.id, update, function (err, result) {
-      if (err) {
-        return res.send({
-          statusCode:500
-        })
-      } else {
-        // 修改成功
-        return res.send({
-          statusCode: 200,
-          message:"修改成功"
-        })
-      }
-    })
+    UpdateInformation(data.id, update, res)
   }
 }
 // 好友昵称修改

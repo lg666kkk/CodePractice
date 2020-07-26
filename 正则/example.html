@@ -7,29 +7,17 @@
   </head>
   <body>
     <script type="text/javascript">
-      let str = "zhufeng2019yangfan2020qihang2021"
-      let reg = /\d+/g
-      // 要求编写一个方法execAll,执行一次可以把所有的匹配结果捕获到
-      ~function () {
-        function execAll (str = "") {
-          // 验证当前正则是否有修饰符g(不加g可能会导致死循环)
-          if (!this.global) {
-            return this.exec(str)
-          }
-          // => str表示要匹配的字符串
-          // => this: RegExp的实例(当前操作的正则)
-          let result = [],
-              res = this.exec(str)
-          while (res) { // 只要捕获的内容不为null，继续捕获
-            result.push(res[0])
-            res = this.exec(str)
-          }
-          return result
-        }
-        RegExp.prototype.execAll = execAll
-      }()
-      console.log(reg.execAll(str));
-      console.log(str.match(reg));
+      let str = "good good syudy, day day up!" // =>单词首字母大写
+      let reg = /\b([a-zA-Z])[a-zA-Z]*\b/g
+      // 函数被执行6次, 每一次都把正则匹配的信息传给实参
+      // 每一次args: ['good', 'g'],  ['good', 'g'], ['study', 's'] ...
+      str = str.replace(reg, (...args) => {
+        let [content, $1] = args
+        $1= $1.toUpperCase()
+        content = content.substring(1)
+        return $1 + content 
+      })
+      console.log(str); // Good Good Syudy, Day Day Up!
     </script>
   </body>
 </html>
