@@ -7,17 +7,23 @@
   </head>
   <body>
     <script type="text/javascript">
-      let str = "good good syudy, day day up!" // =>单词首字母大写
-      let reg = /\b([a-zA-Z])[a-zA-Z]*\b/g
-      // 函数被执行6次, 每一次都把正则匹配的信息传给实参
-      // 每一次args: ['good', 'g'],  ['good', 'g'], ['study', 's'] ...
-      str = str.replace(reg, (...args) => {
-        let [content, $1] = args
-        $1= $1.toUpperCase()
-        content = content.substring(1)
-        return $1 + content 
-      })
-      console.log(str); // Good Good Syudy, Day Day Up!
+      Function.prototype.method = function (name, func) {
+        this.prototype[name] = func;
+        return this;
+      };
+      // 千分符: 实现大数字的千分符处理
+      /**
+       * @params
+       * @return
+       *    [String] 千分符后的字符串
+       */
+      String.method("millimeter", function () {
+        return this.replace(/\d{1,3}(?=(\d{3})+$)/g, (content) => {
+          return content + ","
+        })
+      });
+      let num = "1156228954"; // => 15,628,954  千分符
+      console.log(num.millimeter());
     </script>
   </body>
 </html>

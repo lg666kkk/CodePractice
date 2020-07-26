@@ -14,6 +14,8 @@ let signin = require('../server/signin')
 let search = require('../server/search')
 // 导入用户更新方法
 let userupdate = require('../server/userdetail')
+// 导入好友申请的方法
+let friend = require('../server/friend')
 // 测试
 router.get("/test", (req,res) => {
   res.send("lg NB")
@@ -73,6 +75,10 @@ router.post('/user/updatefriendmarkname', function (req, res) {
 // 获取好友昵称
 router.post('/user/getfriendmarkname', function (req, res) {
   userupdate.getFriendMarkName(req, res)
+})
+// 好友申请
+router.post('/friend/apply', (req, res) => {
+  friend.applyFriend(req, res)
 })
 // 导出
 module.exports = router

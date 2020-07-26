@@ -54,6 +54,10 @@ let FriendsSchema = new Schema({
     type:Date,
     default: new Date()
   },
+  lastTime: { // 最后通信时间
+    type:Date,
+    default: new Date()
+  },
   markName: {
     type:String
   }
@@ -105,6 +109,10 @@ let GroupSchema = new Schema({
   },
   time: { // 群创建时间
     type:Date 
+  },
+  lastTime: { // 最后通信时间
+    type:Date,
+    default: new Date()
   },
   notice: { // 群公告
     type:String

@@ -1,11 +1,6 @@
-let dbmodel = require('../model/dbmodule')
 let brcypt = require('../dao/bcrypt')
 const jwt = require('../dao/jwt')
-
-let User = dbmodel.User
-let Friend = dbmodel.Friends
-let Group = dbmodel.Group
-let GroupUser = dbmodel.GroupUser
+const { Message, Friends, User, Group, GroupUser} = require('../model/dbmodule')
 
 exports.findUser = function (res) {
   User.find(function (err, user) {
@@ -147,7 +142,7 @@ exports.isFriend = function (uid, fid, res) {
     'friendId':fid,
     'state':0
   }
-  Friend.findOne(wherestr, function (err, result) {
+  Friends.findOne(wherestr, function (err, result) {
     if (err) {
       return res.send({
         statusCode:500
@@ -363,7 +358,7 @@ exports.updateFriendMarkName = function (data, res) {
   let updatestr = {
     'markName':data.name
   }
-  Friend.updateOne(wherestr, updatestr, function (err, result) {
+  Friends.updateOne(wherestr, updatestr, function (err, result) {
     if (err) {
       return res.send({
         statusCode:500
@@ -385,7 +380,7 @@ exports.getFriendMarkName = function (data, res) {
   let out = {
     'markName':1
   }
-  Friend.findOne(wherestr, out, function (err, result) {
+  Friends.findOne(wherestr, out, function (err, result) {
     if (err) {
       return res.send({
         statusCode:500
@@ -395,6 +390,100 @@ exports.getFriendMarkName = function (data, res) {
         statusCode:200,
         result
       })
+    }
+  })
+}
+// 好友操作
+// 添加好友
+exports.buildFriend = function (uid, fid, state, res) {
+  let data = {
+    UserId: uid,
+    friendId:fid,
+    state: state,
+    Time: new Date(),
+    lastTime: new Date()
+  }
+  let friend = new Friends(data)
+  friend.save(function (err, result) {
+    if (err) {
+      console.log("添加好友出错");
+    } else {
+      console.log("添加好友....");
+    }
+  })
+}
+
+// 添加一对一消息
+exports.insertMessage = function (uid, fid, msg, type, res) {
+  let data = {
+    UserId: uid,
+    friendId:fid,
+    message: msg,
+    time: new Date(),
+    messageType: type,
+    messageState: 1
+  }
+  let message = new Message(data)
+  message.save(function (err, result) {
+    if (err) {
+      return res.send({
+        statusCode: 500
+      })
+    } else {
+      return res.send({
+        statusCode: 200
+      })
+    }
+  })
+}
+// 一对一聊天最后通讯时间
+exports.updateFriendTime = function (uid, fid) {
+  let wherestr = {
+    'UserId':uid,
+    'friendId':fid
+  }
+  let updatestr = {
+    'time': new Date().getTimezoneOffset()
+  }
+  Friends.updateOne(wherestr, updatestr, function (err, result) {
+    if (err) {
+      console.log("更新好友时间出错");
+    } else {
+      /*
+        return res.send({
+        statusCode: 200
+      })
+      */
+      console.log("更新好友时间成功");
+    }
+  })
+}
+// 好友申请
+exports.applyFriend = (data, res) => {
+  // 好友申请需要好友申请词: 我是xxx之类的
+  // 判断是否为初次好友申请
+  let wherestr = {
+    'UserId':data.uid,
+    'friendId':data.fid
+  }
+  console.log("111");
+  Friends.countDocuments(wherestr, (err, result) => {
+    if (err) {
+      return res.send({
+        statusCode:500
+      })
+    } else {
+      if (result === 0) {
+        // 初次申请
+        this.buildFriend(data.uid, data.fid, 2)
+        this.buildFriend(data.fid, data.uid, 1)
+      } else {
+        // 已经申请过好友了
+        this.updateFriendTime(data.uid, data.fid)
+        this.updateFriendTime(data.fid, data.uid)
+      }
+      // 添加消息 - 好友申请时内容固定是文字
+      this.insertMessage(data.uid, data.fid, data.msg, 0 , res)
     }
   })
 }
