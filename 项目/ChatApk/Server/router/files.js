@@ -12,7 +12,7 @@ let storage = multer.diskStorage({
     // 动态建立文件夹
     // 路径
     let url = req.body.url // 前端传入的路径
-    console.log(url);
+    //console.log(url);
     mkdir.mikdirs('../data/' + url, error => {
       console.log("文件夹创建失败", error);
     })
@@ -31,8 +31,8 @@ let upload = multer({ storage: storage })
 //upload.array('file', 10) : 特别注意这个名字 file 要与前端一致
 router.post('/files/upload', upload.array("file", 10), function (req, res, next) {
   // 获取文件名
-  let data = req.files[0].filename
-  console.log(req.files);
+  let name = req.files[0].filename
+  res.send(name)
 })
 
 module.exports = router
