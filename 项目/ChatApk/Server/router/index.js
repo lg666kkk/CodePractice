@@ -1,9 +1,9 @@
 const express = require("express")
-// const bodyParser = require('body-parser')
-// const jsonParser = bodyParser.json()
-// const urlencodedParser = bodyParser.urlencoded({ extended: false })
 // 创建一个路由容器
 const router = express.Router()
+
+
+
 let dbserve = require('../dao/dbserver')
 let emailServe = require('../dao/emailserve')
 // 导入serve的注册方法
@@ -80,5 +80,14 @@ router.post('/user/getfriendmarkname', function (req, res) {
 router.post('/friend/apply', (req, res) => {
   friend.applyFriend(req, res)
 })
+// 更新好友状态 -- 相当于同意好友
+router.post("/friend/add", (req, res) => {
+  friend.updateFriendState(req, res)
+})
+// 删除好友
+router.post('/friend/delete', (req, res) => {
+  friend.deleteFriend(req, res)
+})
+
 // 导出
 module.exports = router

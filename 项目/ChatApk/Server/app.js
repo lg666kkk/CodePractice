@@ -6,12 +6,14 @@ const cors = require("cors")
 const app = express()
 
 // 配置中间件
-app.use(bodyParser.urlencoded());
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({limit:"50mb"}));
+app.use(bodyParser.json({limit:"50mb"}));
 
 // 跨域
 app.use(cors())
 
+// 配置静态资源
+app.use(express.static(__dirname + '/data'))
 
 // token判断 -- 如果前端携带token进行判断
 app.use(function (req, res, next) {
@@ -39,6 +41,10 @@ app.use(function (req, res, next) {
 const router = require("./router/index")
 // 挂在路由
 app.use(router)
+
+// 导入文件上传
+const multerUpload = require('./router/files')
+app.use(multerUpload)
 
 // 404错误
 app.use((req, res, next) => {

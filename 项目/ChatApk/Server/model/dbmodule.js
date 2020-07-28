@@ -47,7 +47,7 @@ let FriendsSchema = new Schema({
     type:Schema.Types.ObjectId, 
     ref: 'User'
   },
-  state: { // 好友状态
+  state: { // 好友状态  0 表示真正的好友
     type:String 
   },
   Time: { // 生成时间
