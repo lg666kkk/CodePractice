@@ -2,8 +2,6 @@ const express = require("express")
 // 创建一个路由容器
 const router = express.Router()
 
-
-
 let dbserve = require('../dao/dbserver')
 let emailServe = require('../dao/emailserve')
 // 导入serve的注册方法
@@ -16,6 +14,8 @@ let search = require('../server/search')
 let userupdate = require('../server/userdetail')
 // 导入好友申请的方法
 let friend = require('../server/friend')
+// 导入主页相关的方法
+let home = require('../server/home')
 // 测试
 router.get("/test", (req,res) => {
   res.send("lg NB")
@@ -88,6 +88,33 @@ router.post("/friend/add", (req, res) => {
 router.post('/friend/delete', (req, res) => {
   friend.deleteFriend(req, res)
 })
-
+// 获取好友列表
+router.post('/home/userlist', (req, res) => {
+  home.getUser(req, res)
+})
+// 获取好友最后一条一对一消息
+router.post('/home/userlastMsg', (req, res) => {
+  home.getMessageOne(req, res)
+})
+// 获取好友未读消息数
+router.post('/home/noreadMsg', (req, res) => {
+  home.noReadMsg(req, res)
+})
+// 更新好友消息状态
+router.post('/home/updateUserMsg', (req, res) => {
+  home.updateMsg(req, res)
+})
+// 获取群列表
+router.post('/home/grouplist', (req, res) => {
+  home.getGroup(req, res)
+})
+// 获取最后一条群消息
+router.post('/home/grouplastMsg', (req, res) => {
+  home.getGroupMsg(req, res)
+})
+// 跟新群消息状态
+router.post('/home/updateGroupMsg', (req, res) => {
+  home.updateGroupMsg(req, res)
+})
 // 导出
 module.exports = router

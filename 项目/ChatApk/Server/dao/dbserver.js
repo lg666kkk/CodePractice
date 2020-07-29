@@ -6,6 +6,7 @@ const {
   User,
   Group,
   GroupUser,
+  GroupMessage,
 } = require("../model/dbmodule");
 
 exports.findUser = function (res) {
@@ -479,7 +480,7 @@ exports.applyFriend = (data, res) => {
     UserId: data.uid,
     friendId: data.fid,
   };
-  console.log("111");
+  //console.log("111");
   Friends.countDocuments(wherestr, (err, result) => {
     if (err) {
       return res.send({
@@ -545,12 +546,218 @@ exports.deleteFriend = function (data, res) {
   Friends.deleteMany(wherestr, (err, result) => {
     if (err) {
       return res.send({
-        statusCode:500
-      })
+        statusCode: 500,
+      });
     } else {
       return res.send({
-        statusCode:200
-      })
+        statusCode: 200,
+      });
     }
-  })
-}
+  });
+};
+// 按要求获取用户列表
+exports.getUsers = function (uid, state, res) {
+  let query = Friends.find({});
+  // 查询条件
+  query.where({ UserId: uid, state: state });
+  // 查找friendID关联的user对象
+  query.populate("friendId");
+  // 排序方式: 最后通讯时间
+  query.sort({ lastTime: -1 });
+  // 查询结果
+  query
+    .exec()
+    .then(function (e) {
+      let result = e.map((item) => {
+        return {
+          id: item.friendId._id,
+          name: item.friendId.name,
+          markName: item.markName,
+          imgUrl: item.friendId.imgUrl,
+          lastTime: item.lastTime,
+        };
+      });
+      return res.send({
+        statusCode: 200,
+        result,
+      });
+    })
+    .catch(function (err) {
+      return res.send({
+        statusCode: 500,
+      });
+    });
+};
+// 按要求获取好友最后一条一对一消息
+exports.getOneMsg = function (uid, fid, res) {
+  let query = Message.findOne({});
+  // 查询条件
+  query.where({
+    $or: [
+      {
+        UserId: uid,
+        friendId: fid,
+      },
+      {
+        UserId: fid,
+        friendId: uid,
+      },
+    ],
+  });
+  // 排序方式: 最后通讯时间
+  query.sort({ time: -1 });
+  // 查询结果
+  query
+    .exec()
+    .then(function (e) {
+      //console.log(e);
+      let result = {
+        message: e.message,
+        messageType: e.messageType,
+        lastTime: e.time,
+      };
+      return res.send({
+        statusCode: 200,
+        result,
+      });
+    })
+    .catch(function (err) {
+      return res.send({
+        statusCode: 500,
+      });
+    });
+};
+// 汇总好友一对一未读消息数
+exports.noReadMsg = function (uid, fid, res) {
+  // 条件
+  let wherestr = {
+    UserId: uid,
+    friendId: fid,
+    messageState: 1,
+  };
+  Message.countDocuments(wherestr, function (err, result) {
+    if (err) {
+      return res.send({
+        statusCode: 500,
+      });
+    }
+    return res.send({
+      statusCode: 200,
+      result,
+    });
+  });
+};
+// 好友一对一消息状态更改
+exports.updateMsg = function (uid, fid, res) {
+  // 条件
+  let wherestr = {
+    UserId: uid,
+    friendId: fid,
+    messageState: 1,
+  };
+  let updatestr = {
+    messageState: 0,
+  };
+  Message.updateMany(wherestr, updatestr, function (err, result) {
+    if (err) {
+      return res.send({
+        statusCode: 500,
+      });
+    }
+    return res.send({
+      statusCode: 200,
+    });
+  });
+};
+// 按要求获取群列表
+exports.getGroup = function (uid, res) {
+  // id为用户所在的群
+  let query = GroupUser.find({});
+  // 查询条件
+  query.where({ UserId: uid });
+
+  query.populate("GroupId");
+  // 排序方式: 最后通讯时间
+  query.sort({ lastTime: -1 });
+  // 查询结果
+  query
+    .exec()
+    .then(function (e) {
+      let result = e.map((item) => {
+        return {
+          id: item.GroupId._id,
+          name: item.GroupId.name,
+          markName: item.name,
+          imgUrl: item.GroupId.imgUrl,
+          lastTime: item.lastTime,
+          tip: item.tip,
+        };
+      });
+      return res.send({
+        statusCode: 200,
+        result,
+      });
+    })
+    .catch(function (err) {
+      return res.send({
+        statusCode: 500,
+      });
+    });
+};
+// 获取最后一条群消息
+exports.getGroupMsg = function (gid, res) {
+  let query = GroupMessage.findOne({});
+  // 查询条件
+  query.where({
+    $or: [
+      {
+        GroupId: gid,
+      },
+    ],
+  });
+  query.populate("UserId");
+  // 排序方式: 最后通讯时间
+  query.sort({ time: -1 });
+  // 查询结果
+  query
+    .exec()
+    .then(function (e) {
+      //console.log(e);
+      let result = {
+        message: e.message,
+        messageType: e.messageType,
+        lastTime: e.time,
+        name: e.UserId.name,
+      };
+      return res.send({
+        statusCode: 200,
+        result,
+      });
+    })
+    .catch(function (err) {
+      return res.send({
+        statusCode: 500,
+      });
+    });
+};
+// 群消息状态更改
+exports.updateGroupMsg = function (uid, gid, res) {
+  // 条件
+  let wherestr = {
+    UserId: uid,
+    GroupId: gid,
+  };
+  let updatestr = {
+    tip: 0,
+  };
+  GroupMessage.updateOne(wherestr, updatestr, function (err, result) {
+    if (err) {
+      return res.send({
+        statusCode: 500,
+      });
+    }
+    return res.send({
+      statusCode: 200,
+    });
+  });
+};
