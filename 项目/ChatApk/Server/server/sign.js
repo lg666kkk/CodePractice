@@ -1,10 +1,12 @@
 const dbserver = require("../dao/dbserver")
-
+const postMail = require("../dao/emailserve")
 // 用户注册
 exports.SignUp = function (req, res) {
   let name = req.body.name
   let mail = req.body.email
   let pass = req.body.password
+  // 发送邮件
+  postMail.emailSignUp(mail, res)
   dbserver.buildUser(name, mail, pass, res)
 }
 

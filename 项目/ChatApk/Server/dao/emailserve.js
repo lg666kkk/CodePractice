@@ -25,10 +25,14 @@ exports.emailSignUp = function (email, res) {
   // 发送邮件
   transporter.sendMail(options, function (err, msg) {
     if (err) {
-      res.send("发送失败")
-      console.log(err);
+      res.send({
+        statusCode:500
+      })
+      //console.log(err);
     } else {
-      res.send("111111100ppp")
+      res.send({
+        statusCode:200
+      })
       console.log('邮箱发送成功');
     }
   })
