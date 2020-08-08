@@ -105,6 +105,7 @@ exports.userMatch = function (data, pwd, res) {
 // 搜索用户
 exports.SearchUser = function (data, res) {
   let wherestr;
+  //console.log(data);
   if (data === "liyaqing") {
     wherestr = {};
   } else {
@@ -125,9 +126,11 @@ exports.SearchUser = function (data, res) {
     imgUrl: 1,
   };
   User.find(wherestr, out, function (err, result) {
+    //console.log(result);
     if (err) {
       return res.send({
-        statusCode: 500,
+        stausCode: 500,
+        msg: "出错"
       });
     } else {
       if (result.length == 0) {
@@ -136,7 +139,7 @@ exports.SearchUser = function (data, res) {
         });
       }
       return res.send({
-        statusCode: 200,
+        stausCode: 200,
         result,
       });
     }
