@@ -48,11 +48,11 @@ exports.countUser = function (data, type, res) {
   wherestr[type] = data;
   User.countDocuments(wherestr, function (err, result) {
     if (err) {
-      res.send({
+      return res.send({
         statusCode: 500,
       });
     } else {
-      res.send({
+      return res.send({
         statusCode: 200,
         result,
       });
@@ -155,7 +155,7 @@ exports.isFriend = function (uid, fid, res) {
   Friends.findOne(wherestr, function (err, result) {
     if (err) {
       return res.send({
-        statusCode: 500,
+        statusCode: 5001
       });
     } else {
       if (result) {
@@ -244,9 +244,11 @@ exports.userDetail = function (id, res) {
     password: 0,
   };
   User.findOne(wherestr, out, function (err, result) {
+    console.log(result)
     if (err) {
       return res.send({
         statusCode: 500,
+        err
       });
     } else {
       return res.send({

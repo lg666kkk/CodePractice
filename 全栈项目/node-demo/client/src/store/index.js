@@ -4,12 +4,12 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const types = {
-  SET_AUTHENTICATED: "SET_AUTHENTICATED",
-  SET_USER: "SET_USER"
-}
+  SET_AUTHENTICATED: "SET_AUTHENTICATED", // 通行证
+  SET_USER: "SET_USER" // 用户信息
+} 
 const state = {
-  isAuthenticated: false,
-  user: {}
+  isAuthenticated: false, 
+  user: {} 
 }
 // 获取状态信息
 const getters = {
@@ -35,8 +35,8 @@ const mutations = {
 }
 
 const actions = {
-  setAuthenticated: ({ commit }, isAuthenticated) => {
-    commit(types.SET_AUTHENTICATED, isAuthenticated);
+  setAuthenticated: (context, isAuthenticated) => {
+    context.commit(types.SET_AUTHENTICATED, isAuthenticated);
   },
 
   setUser: ({ commit }, user) => {

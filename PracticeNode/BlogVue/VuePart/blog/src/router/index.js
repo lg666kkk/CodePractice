@@ -76,12 +76,19 @@ const route = new Router({
 // 路由守卫
 route.beforeEach((to, from, next) => {
   const isLogin = localStorage.Token ? true : false
-  if (to.path== '/' || to.path=='/admin/signin' || to.path=='/article' || to.path=='/about' || to.path=='/admin/register' || to.path=='/tag') {
-    next()
-  } else if (to.path== `/articleDetail/:id`) {
+  if (to.path== '/' || 
+      to.path=='/admin/signin' || 
+      to.path=='/about' || 
+      to.path== "/article" ||
+      to.path=='/admin/register' || 
+      to.path=='/tag') {
     next()
   } else {
-    isLogin ? next() : next('/admin/signin')
+    if (to.name === "articleDetail") {
+      next()
+    } else {
+      isLogin ? next() : next('/admin/signin')
+    }
   }
 })
 export default route

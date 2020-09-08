@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const User = require("./User")
 let Schema = mongoose.Schema
 mongoose.connect('mongodb://localhost/Blog1',{ useNewUrlParser: true,  useUnifiedTopology: true });
 // 设计集合结构

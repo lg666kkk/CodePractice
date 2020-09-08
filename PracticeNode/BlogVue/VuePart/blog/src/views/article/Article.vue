@@ -53,7 +53,7 @@
             id: id,
             views: view
           }
-          //console.log(view);
+          console.log(view);
           data = qs.stringify(data)
           request({
             method: 'post',

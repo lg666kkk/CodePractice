@@ -18,6 +18,7 @@
           <span>点赞</span>
           <img v-if="isPraise" src="~assets/img/praise/点赞.svg" alt="" @click="isPariseBtn">
           <img v-else src="~assets/img/praise/点赞_active.svg" alt="" @click="isPariseBtn">
+          <span>22</span>
         </div>
       </div>
 
