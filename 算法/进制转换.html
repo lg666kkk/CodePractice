@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script type='text/javascript'>
+    /**
+     * 用A表示第一列, B表示第二列, C表示第三列 ... Z表示第26列
+     * AA表示第27列, AB表示第28列 ... 以此类推。清写出一个函数,输入字母表示的列编号,输出它是第几列？
+    */
+    let str = "Z"
+    function getCode (code) {
+      let arr = [...code]
+      if (arr.length == 0) {
+        return null
+      }
+      let total = 0
+      arr.reverse().forEach((item, index) => {
+        total += (item.charCodeAt() - "A".charCodeAt() + 1) * Math.pow(26, index)
+      })
+      return total
+    }
+    let res = getCode(str)
+    console.log(res);
+  </script>
+</body>
+</html>
